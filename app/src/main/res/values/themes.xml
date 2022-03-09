@@ -35,6 +35,11 @@
         <item name="backgroundTint">@color/bottomNavLight</item>
     </style>
 
+    <style name="Theme.ViewPagerTest.DatePicker" parent="">
+        <item name="android:backgroundTint">#EAEAEA</item>
+        <item name="backgroundTint">#EAEAEA</item>
+    </style>
+
     <style name="Theme.ViewPagerTest.roundedImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">8.0dip</item>
@@ -48,5 +53,22 @@
     <style name="DialogAnimation">
         <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
         <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.bottomDialog" parent="">
+        <item name="android:backgroundTint">@color/bottomNavLight</item>
+        <item name="android:background">@drawable/bg_dialog</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.TextBox" parent="">
+        <item name="android:backgroundTint">#EAEAEA</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.OkButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:backgroundTint">#D1FFD3</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.CancelButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="android:backgroundTint">#FFD5D5</item>
     </style>
 </resources>

@@ -8,14 +8,19 @@
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/bottom_line.xml" value="0.2128205128205128" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/bottom_nav_drawable.xml" value="0.2128205128205128" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/bottom_nav_selector.xml" value="0.2128205128205128" />
+        <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/ic_check.xml" value="0.10989583333333333" />
+        <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/ic_close.xml" value="0.10989583333333333" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/ic_home.xml" value="0.2128205128205128" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/rounded_dialog.xml" value="0.10989583333333333" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/drawable/scoll_gradient.xml" value="0.2128205128205128" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout-v26/custom_actionbar.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/activity_profile.xml" value="0.1" />
+        <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/bottom_sheet_address_update_layout.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.1" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/bottom_sheet_layout.xml" value="0.2" />
+        <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/bottom_sheet_name_update_layout.xml" value="0.2" />
+        <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/bottom_sheet_parent_update_layout.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/custom_actionbar.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/fragment_cart.xml" value="0.2" />
         <entry key="..\:/Projects/Android/ViewPagerTest/app/src/main/res/layout/fragment_home.xml" value="0.2" />

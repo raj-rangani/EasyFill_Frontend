@@ -42,6 +42,7 @@
                     android:layout_height="match_parent">
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/profileImage"
                         android:layout_width="90sp"
                         android:layout_height="90sp"
                         android:src="@color/bluePrimary"
@@ -60,6 +61,7 @@
                             android:gravity="center_vertical">
 
                             <com.google.android.material.button.MaterialButton
+                                android:background="@android:color/transparent"
                                 android:id="@+id/icUsername"
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
@@ -90,6 +92,7 @@
                             android:gravity="center_vertical">
 
                             <com.google.android.material.button.MaterialButton
+                                android:background="@android:color/transparent"
                                 android:id="@+id/icEmail"
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
@@ -128,6 +131,7 @@
                                 android:insetTop="0dp"
                                 android:insetRight="0dp"
                                 android:insetBottom="0dp"
+                                android:background="@android:color/transparent"
                                 app:icon="@drawable/ic_phone_outline"
                                 app:iconGravity="textEnd"
                                 app:iconPadding="0dp"
@@ -150,6 +154,7 @@
                             android:gravity="center_vertical">
 
                             <com.google.android.material.button.MaterialButton
+                                android:background="@android:color/transparent"
                                 android:id="@+id/icDob"
                                 android:layout_width="18dp"
                                 android:layout_height="18dp"
