@@ -14,7 +14,10 @@ import  com.google.android.material.appbar.MaterialToolbar
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import com.example.database.MyDatabaseHelper
+import com.example.database.models.Form
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity()
 {
@@ -25,6 +28,26 @@ class MainActivity : AppCompatActivity()
     {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //database create start
+
+
+        try{
+        val dbHelper = MyDatabaseHelper(this)
+            val form = Form(3,"mother","rajbha", 1, 80)
+            val formID = dbHelper.insertForm(form)
+        }
+        catch(ex:Exception)
+        {
+            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+//        val playlists = ()
+//        val playlistsID = dbHelper.insertPlaylist(playlists)
+
+//        Toast.makeText(this, playlistsID.toString(), Toast.LENGTH_SHORT).show()
+
+        //databse create end
 
         frgCurrent = findViewById(R.id.frgCurrent)
         setCurrentFragment(HomeFragment.INSTANCE)
