@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.appbar.MaterialToolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/corner_background"
+    android:layout_width="fill_parent"
+    android:layout_height="?actionBarSize"
+    android:layout_marginTop="20.0sp"
+    android:layout_marginStart="20.0sp"
+    android:layout_marginEnd="20.0sp"
+    style="@style/Theme.ViewPagerTest.appBar"
+    >
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout android:padding="5sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back"
+                android:paddingBottom="5dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_back_arrow"
+                android:backgroundTint="?colorPrimaryVariant"
+                android:tooltipText="back"
+                app:cornerRadius="8dp"
+                app:iconGravity="textEnd"
+                app:iconPadding="0dp"
+                app:iconSize="25dp"
+                app:iconTint="?colorAccent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="2dp"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="0.0dip"
+                android:text="My Profile"
+                android:includeFontPadding="false" />
+
+        </LinearLayout>
+
+        <LinearLayout android:padding="5.0sp" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/uiMode"
+                android:paddingBottom="5dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:insetLeft="0dp"
+                android:insetRight="0dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginEnd="15sp"
+                app:icon="@drawable/ic_logout"
+                android:backgroundTint="?colorPrimaryVariant"
+                android:tooltipText="Logout"
+                app:cornerRadius="8dp"
+                app:iconGravity="textEnd"
+                app:iconPadding="0dp"
+                app:iconSize="15dp"
+                app:iconTint="?colorAccent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.appbar.MaterialToolbar>

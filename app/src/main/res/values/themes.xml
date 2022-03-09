@@ -1,0 +1,52 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.ViewPagerTest" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/bluePrimary</item>
+        <item name="colorPrimaryVariant">@color/rippleLight</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/bluePrimary</item>
+        <item name="colorSecondaryVariant">@color/bluePrimary</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
+        <!-- Color Accent-->
+        <item name="colorAccent">#1F1F1F</item>
+        <item name="colorOutline">#CACACA</item>
+
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!--    Custom Application Theme -->
+    <style name="Theme.ViewPagerTest.BottomNavBar" parent="@style/Widget.MaterialComponents.BottomNavigationView">
+        <item name="android:backgroundTint">@color/bottomNavLight</item>
+        <item name="backgroundTint">@color/bottomNavLight</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.ProfileCards" parent="Widget.Material3.CardView.Filled">
+        <item name="android:backgroundTint">@color/bottomNavLight</item>
+        <item name="backgroundTint">@color/bottomNavLight</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.appBar" parent="@style/ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="android:backgroundTint">@color/bottomNavLight</item>
+        <item name="backgroundTint">@color/bottomNavLight</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8.0dip</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.roundedProfileImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">25sp</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+</resources>
