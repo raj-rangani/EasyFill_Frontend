@@ -111,8 +111,8 @@ class MainActivity : AppCompatActivity()
         when (menuItem.itemId)
         {
             R.id.menuHome -> setCurrentFragment(HomeFragment.INSTANCE)
-            R.id.menuCart -> setCurrentFragment(CartFragment.INSTANCE)
-            R.id.menuProfile -> setCurrentFragment(ProfileFragment.INSTANCE)
+            R.id.menuPdf -> setCurrentFragment(PdfFragment.INSTANCE)
+            R.id.menuProfileGroup -> setCurrentFragment(ProfileGroupFragment.INSTANCE)
             else -> return false
         }
 
