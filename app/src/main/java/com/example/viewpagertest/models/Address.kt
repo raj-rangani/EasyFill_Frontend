@@ -1,6 +1,7 @@
 package com.example.viewpagertest.models
 
 data class Address(
+    var id:Int?,
     var street_line_1: String,
     var area: String,
     var locality: String,
