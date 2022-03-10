@@ -1,6 +1,7 @@
 package com.example.viewpagertest.models
 
 data class Profile(
+    var id:Int?,
     var username: String,
     var password: String?,
     var email: String,

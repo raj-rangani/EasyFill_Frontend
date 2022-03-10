@@ -27,9 +27,9 @@ class ProfileApi {
                 val addressJson = responseJson.getJSONObject("address")
                 val parentJson = responseJson.getJSONObject("parent")
 
-                val name:Name = Name("", "", "", "")
-                val address:Address = Address("", "", "", "", "", "", "", "", "", "")
-                val parent:Parent = Parent(Relation.N, Name("","","",""))
+                val name:Name = Name(null,"", "", "", "")
+                val address:Address = Address(null,"", "", "", "", "", "", "", "", "", "")
+                val parent:Parent = Parent(null, Relation.N, Name(null,"","","",""))
 
                 if(!(nameJson.equals(null))) {
                     name.firstname = nameJson.getString("firstname")
@@ -54,7 +54,7 @@ class ProfileApi {
                 if(!(parentJson.equals(null))) {
                     parent.relation = Relation.valueOf(parentJson.getString("relation"))
                     val nameJson = parentJson.getJSONObject("name")
-                    val parentName:Name = Name("", "", "", "")
+                    val parentName:Name = Name(null,"", "", "", "")
 
                     if(!(nameJson.equals(null))) {
                         parentName.firstname = nameJson.getString("firstname")
@@ -67,6 +67,7 @@ class ProfileApi {
                 }
 
                 return Profile(
+                    id = null,
                     username = responseJson.getString("username"),
                     email = responseJson.getString("email"),
                     contactNo = responseJson.getString("contact_no"),
