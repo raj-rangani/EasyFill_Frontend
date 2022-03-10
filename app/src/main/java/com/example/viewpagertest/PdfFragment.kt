@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-class ProfileFragment : Fragment()
+class PdfFragment : Fragment()
 {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        val fragmentView = inflater.inflate(R.layout.fragment_profile, container, false)
+        val fragmentView = inflater.inflate(R.layout.fragment_pdf, container, false)
 
         // ...
 
@@ -19,6 +19,6 @@ class ProfileFragment : Fragment()
 
     companion object
     {
-        val INSTANCE = ProfileFragment()
+        val INSTANCE = PdfFragment()
     }
 }

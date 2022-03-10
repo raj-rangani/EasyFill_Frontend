@@ -6,21 +6,21 @@
     <item
         android:id="@+id/menuHome"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_fill"
         android:title="@string/home"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menuCart"
+        android:id="@+id/menuPdf"
         android:enabled="true"
-        android:icon="@drawable/ic_cart"
-        android:title="@string/cart"
+        android:icon="@drawable/ic_file_pdf"
+        android:title="@string/form"
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menuProfile"
+        android:id="@+id/menuProfileGroup"
         android:enabled="true"
-        android:icon="@drawable/ic_profile"
+        android:icon="@drawable/ic_group"
         android:title="@string/profile"
         app:showAsAction="ifRoom" />
 

@@ -2,22 +2,15 @@ package com.example.viewpagertest
 
 import android.app.UiModeManager
 import android.content.Intent
-import android.content.SharedPreferences
-import android.content.pm.SharedLibraryInfo
-import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.Toast
 import  com.google.android.material.appbar.MaterialToolbar
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import com.example.database.MyDatabaseHelper
-import com.example.database.models.Form
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity()
 {
@@ -32,15 +25,15 @@ class MainActivity : AppCompatActivity()
         //database create start
 
 
-        try{
-        val dbHelper = MyDatabaseHelper(this)
-            val form = Form(3,"mother","rajbha", 1, 80)
-            val formID = dbHelper.insertForm(form)
-        }
-        catch(ex:Exception)
-        {
-            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
-        }
+//        try{
+//        val dbHelper = MyDatabaseHelper(this)
+//            val form = Form(3,"mother","rajbha", 1, 80)
+//            val formID = dbHelper.insertForm(form)
+//        }
+//        catch(ex:Exception)
+//        {
+//            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
+//        }
 
 //        val playlists = ()
 //        val playlistsID = dbHelper.insertPlaylist(playlists)
@@ -111,8 +104,8 @@ class MainActivity : AppCompatActivity()
         when (menuItem.itemId)
         {
             R.id.menuHome -> setCurrentFragment(HomeFragment.INSTANCE)
-            R.id.menuCart -> setCurrentFragment(CartFragment.INSTANCE)
-            R.id.menuProfile -> setCurrentFragment(ProfileFragment.INSTANCE)
+            R.id.menuPdf -> setCurrentFragment(PdfFragment.INSTANCE)
+            R.id.menuProfileGroup -> setCurrentFragment(ProfileGroupFragment.INSTANCE)
             else -> return false
         }
 
