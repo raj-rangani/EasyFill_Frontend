@@ -32,9 +32,9 @@ class MyDatabaseHelper(context: Context) :
             db.execSQL("CREATE TABLE Address (Id INTEGER PRIMARY KEY AUTOINCREMENT,street_line_1 TEXT NOT NULL, area TEXT NOT NULL,locality TEXT NOT NULL,houseNo TEXT NOT NULL,postOffice TEXT NOT NULL,state TEXT NOT NULL,district TEXT NOT NULL,subDistrict TEXT NOT NULL,city TEXT NOT NULL,pincode TEXT NOT NULL )")
             db.execSQL("CREATE TABLE FormField (Id INTEGER PRIMARY KEY AUTOINCREMENT, fieldname TEXT NOT NULL, fielddata TEXT NOT NULL, type TEXT NOT NULL)")
             db.execSQL("CREATE TABLE Name (Id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT NOT NULL, lastname TEXT NOT NULL, middlename TEXT NOT NULL, fullname TEXT NOT NULL)")
-            db.execSQL("CREATE TABLE FieldSpecifier (Id INTEGER PRIMARY KEY AUTOINCREMENT, formId LONG NOT NULL, fieldId LONG NOT NULL, xaxis FLOAT NOT NULL, yaxis FLOAT NOT NULL, FOREIGN KEY(formId) REFERENCES Form(Id), FOREIGN KEY(fieldId) REFERENCES FormField(Id))")
-            db.execSQL("CREATE TABLE Parent (Id INTEGER PRIMARY KEY AUTOINCREMENT, relation TEXT NOT NULL, nameId LONG NOT NULL, FOREIGN KEY(nameId) REFERENCES Name(Id))")
-            db.execSQL("CREATE TABLE Profile (Id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, contactNo TEXT NOT NULL, dob TEXT NOT NULL, gender TEXT NOT NULL, nameId LONG NOT NULL, addressId LONG NOT NULL, parentId LONG NOT NULL,FOREIGN KEY(nameId) REFERENCES Name(Id),FOREIGN KEY(addressId) REFERENCES Address(Id),FOREIGN KEY(parentId) REFERENCES Parent(Id))")
+            db.execSQL("CREATE TABLE FieldSpecifier (Id INTEGER PRIMARY KEY AUTOINCREMENT, formId LONG NOT NULL, fieldId LONG NOT NULL, xaxis FLOAT NOT NULL, yaxis FLOAT NOT NULL, FOREIGN KEY(formId) REFERENCES Form(Id) ON DELETE CASCADE, FOREIGN KEY(fieldId) REFERENCES FormField(Id) ON DELETE CASCADE)")
+            db.execSQL("CREATE TABLE Parent (Id INTEGER PRIMARY KEY AUTOINCREMENT, relation TEXT NOT NULL, nameId LONG NOT NULL, FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE)")
+            db.execSQL("CREATE TABLE Profile (Id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, contactNo TEXT NOT NULL, dob TEXT NOT NULL, gender TEXT NOT NULL, nameId LONG NOT NULL, addressId LONG NOT NULL, parentId LONG NOT NULL,FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE,FOREIGN KEY(addressId) REFERENCES Address(Id) ON DELETE CASCADE,FOREIGN KEY(parentId) REFERENCES Parent(Id) ON DELETE CASCADE)")
 
             db.execSQL("INSERT INTO Form (authorname,username,fieldspacing,fillpercent) VALUES ('raj','rajbha',20,99)")
 
@@ -64,7 +64,7 @@ class MyDatabaseHelper(context: Context) :
             cursor = readableDatabase.query(
                 "Form",
                 arrayOf("*"),
-                "id",
+                "id = ?",
                 arrayOf(id.toString()),
                 null,
                 null,
@@ -131,7 +131,7 @@ class MyDatabaseHelper(context: Context) :
             cursor = readableDatabase.query(
                 "FormField",
                 arrayOf("*"),
-                "id",
+                "id = ?",
                 arrayOf(id.toString()),
                 null,
                 null,
@@ -164,9 +164,9 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertFormField(formField: FormField): Long {
         val values = ContentValues()
-        values.put("street_line_1", formField.fieldname)
-        values.put("area", formField.fielddata)
-        values.put("locality", formField.type)
+        values.put("fieldname", formField.fieldname)
+        values.put("fielddata", formField.fielddata)
+        values.put("type", formField.type)
 
         return writableDatabase.insert("FormField", null, values)
     }
@@ -190,8 +190,10 @@ class MyDatabaseHelper(context: Context) :
 
         return writableDatabase.insert("Address", null, values)
     }
-    fun getAddressData():ArrayList<Address>{
-        val cursor = readableDatabase.query(
+    fun getAddressData(id: Int?):ArrayList<Address>{
+        var cursor: Cursor? = null
+        if (id == null) {
+        cursor = readableDatabase.query(
             "Address",
             arrayOf("*"),
             null,
@@ -199,29 +201,45 @@ class MyDatabaseHelper(context: Context) :
             null,
             null,
             null
-        )
-        cursor.moveToFirst()
-        val arrayOfAddress = arrayListOf<Address>()
+        )}
 
-        while (!cursor.isAfterLast()) {
-            val address = Address(
-                id = cursor.getInt(0),
-                street_line_1 = cursor.getString(1),
-                area = cursor.getString(2),
-                locality = cursor.getString(3),
-                houseNo = cursor.getString(4),
-                postOffice = cursor.getString(5),
-                state = cursor.getString(6),
-                district = cursor.getString(7),
-                subDistrict = cursor.getString(8),
-                city = cursor.getString(9),
-                pincode = cursor.getString(10)
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "Address",
+                arrayOf("*"),
+                "id = ?",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
             )
-            arrayOfAddress.add(address)
-            cursor.moveToNext()
         }
-        cursor.close()
-        return arrayOfAddress
+        if (!(cursor!!.equals(null))) {
+            cursor.moveToFirst()
+            val arrayOfAddress = arrayListOf<Address>()
+
+            while (!cursor.isAfterLast()) {
+                val address = Address(
+                    id = cursor.getInt(0),
+                    street_line_1 = cursor.getString(1),
+                    area = cursor.getString(2),
+                    locality = cursor.getString(3),
+                    houseNo = cursor.getString(4),
+                    postOffice = cursor.getString(5),
+                    state = cursor.getString(6),
+                    district = cursor.getString(7),
+                    subDistrict = cursor.getString(8),
+                    city = cursor.getString(9),
+                    pincode = cursor.getString(10)
+                )
+                arrayOfAddress.add(address)
+                cursor.moveToNext()
+            }
+
+            cursor.close()
+            return arrayOfAddress
+        }
+        return arrayListOf()
     }
     fun deleteAddress(id: Int): Int {
         return writableDatabase.delete("Address", "Id = ?", arrayOf(id.toString()))
@@ -229,8 +247,8 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertFieldSpecifier(fieldSpecifier: FieldSpecifier): Long {
         val values = ContentValues()
-        values.put("form", fieldSpecifier.form?.id)
-        values.put("field", fieldSpecifier.field?.id)
+        values.put("formId", fieldSpecifier.form?.id)
+        values.put("fieldId", fieldSpecifier.field?.id)
         values.put("xaxis", fieldSpecifier.xaxis)
         values.put("yaxis", fieldSpecifier.yaxis)
 
@@ -252,12 +270,12 @@ class MyDatabaseHelper(context: Context) :
         val arrayOfFieldSpecifier = arrayListOf<FieldSpecifier>()
 
         while (!cursor.isAfterLast()) {
-            val form = getFormData(cursor.getInt(1))[0]
-            val formField = getFormFieldData(cursor.getInt(2))[0]
+            val form = getFormData(cursor.getInt(1))
+            val formField = getFormFieldData(cursor.getInt(2))
             val fieldSpecifier = FieldSpecifier(
                 id = cursor.getInt(0),
-                form = form,
-                field = formField,
+                form = form[0],
+                field = formField[0],
                 xaxis = cursor.getFloat(3),
                 yaxis = cursor.getFloat(4)
             )
@@ -297,7 +315,7 @@ class MyDatabaseHelper(context: Context) :
             cursor = readableDatabase.query(
                 "Name",
                 arrayOf("*"),
-                "id",
+                "id = ?",
                 arrayOf(id.toString()),
                 null,
                 null,
@@ -351,7 +369,7 @@ class MyDatabaseHelper(context: Context) :
             cursor = readableDatabase.query(
                 "Parent",
                 arrayOf("*"),
-                "id",
+                "id = ?",
                 arrayOf(id.toString()),
                 null,
                 null,
@@ -391,7 +409,66 @@ class MyDatabaseHelper(context: Context) :
         values.put("contact_no", profile.contactNo)
         values.put("email", profile.email)
         values.put("gender", profile.gender)
+        values.put("name",profile.name.id)
+        values.put("address",profile.address.id)
+        values.put("parent",profile.parent.id)
 
         return writableDatabase.insert("Parent", null, values)
     }
+
+    fun getProfileData(id:Int?):ArrayList<Profile>{
+        var cursor: Cursor? = null
+        if (id == null) {
+            cursor = readableDatabase.query(
+                "Profile",
+                arrayOf("*"),
+                null,
+                null,
+                null,
+                null,
+                null
+            )}
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "Profile",
+                arrayOf("*"),
+                "id = ?s",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+        if (!(cursor!!.equals(null))) {
+            cursor.moveToFirst()
+            val arrayOfProfile = arrayListOf<Profile>()
+            val name = getNameData(cursor.getInt(7))[0]
+            val address = getAddressData(cursor.getInt(8))[0]
+            val parent = getParentData(cursor.getInt(9))[0]
+
+            while (!cursor.isAfterLast()) {
+                val profile = Profile(
+                    id = cursor.getInt(0),
+                    username = cursor.getString(1),
+                    password = cursor.getString(2),
+                    email = cursor.getString(3),
+                    contactNo = cursor.getString(4),
+                    dob = cursor.getString(5),
+                    gender = cursor.getString(6),
+                    name = name,
+                    address = address,
+                    parent = parent
+                )
+                arrayOfProfile.add(profile)
+                cursor.moveToNext()
+            }
+            cursor.close()
+            return arrayOfProfile
+        }
+        return arrayListOf()
+    }
+    fun deleteProfile(id: Int): Int {
+        return writableDatabase.delete("Profile", "Id = ?", arrayOf(id.toString()))
+    }
+
 }

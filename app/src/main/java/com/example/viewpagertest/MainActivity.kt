@@ -11,8 +11,10 @@ import  com.google.android.material.appbar.MaterialToolbar
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
+import com.example.database.models.FieldSpecifier
 import com.example.viewpagertest.database.MyDatabaseHelper
 import com.example.database.models.Form
+import com.example.database.models.FormField
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.lang.Exception
 
@@ -27,24 +29,37 @@ class MainActivity : AppCompatActivity()
         setContentView(R.layout.activity_main)
 
         //database create start
-//        try{
-//        val dbHelper = MyDatabaseHelper(this)
-//            val form = Form(3,"mother","rajbha", 1, 80)
-//            val formID = dbHelper.insertForm(form)
-//            val arrayOfForm :ArrayList<Form>
-//            arrayOfForm = dbHelper.getFormData()
-//            Toast.makeText(this, arrayOfForm.toString(), Toast.LENGTH_SHORT).show()
-//        }
-//        catch(ex:Exception)
-//        {
-//            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
-//        }
-//
-//        //TODO: Till Here
+        try{
+        val dbHelper = MyDatabaseHelper(this)
+            val form = Form(null,"mother","rajbha", 1, 80)
+            val formID = dbHelper.insertForm(form)
+            val arrayOfForm :ArrayList<Form>
+            arrayOfForm = dbHelper.getFormData(null)
+
+            val formfield = FormField(null,"name","Parth","text")
+            val formfieldID = dbHelper.insertFormField(formfield)
+            val arrayOfFormfield :ArrayList<FormField>
+            arrayOfFormfield = dbHelper.getFormFieldData(null)
+
+            val fieldSpecifier =  FieldSpecifier(null,arrayOfForm[0],arrayOfFormfield[0],10.11f,10.12f)
+            val fieldSpecifierID = dbHelper.insertFieldSpecifier(fieldSpecifier)
+            val arrayOffieldspecifier :ArrayList<FieldSpecifier> = dbHelper.getFieldSpecifierData()
+
+
+
+            dbHelper.deleteForm(arrayOfForm[0].id!!)
+            Toast.makeText(this, arrayOfForm.toString(), Toast.LENGTH_SHORT).show()
+        }
+        catch(ex:Exception)
+        {
+            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
+        }
+
+        //TODO: Till Here
 
 //        val playlists = ()
-//        val playlistsID = dbHelper.insertPlaylist(playlists)
-
+//        val playlistsID = MyDatabaseHelper.insertPlaylist(playlists)
+//
 //        Toast.makeText(this, playlistsID.toString(), Toast.LENGTH_SHORT).show()
 
         //databse create end
