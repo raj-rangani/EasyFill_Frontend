@@ -30,6 +30,11 @@
         <item name="android:backgroundTint">@color/darkActionBar</item>
     </style>
 
+    <style name="Theme.ViewPagerTest.ProfileDataCards" parent="">
+        <item name="backgroundTint">#000</item>
+        <item name="android:backgroundTint">#000</item>
+    </style>
+
     <style name="Theme.ViewPagerTest.ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="background">@color/darkActionBar</item>
     </style>

@@ -6,6 +6,8 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewManager
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -52,6 +54,10 @@ class AccordianView @JvmOverloads constructor(context: Context, attrs: Attribute
                         id = View.generateViewId()
                         tag = id.toString()
                     }
+                    var param = row.layoutParams as ViewGroup.MarginLayoutParams
+                    param.height = 100
+                    param.bottomMargin = 100
+                    row.layoutParams = param
                     row.setOnClickListener2 {
                         contentViewHolder?.let { _contentViewHolder ->
                             _contentViewHolder.itemView.visibility = View.INVISIBLE
@@ -90,7 +96,10 @@ class AccordianView @JvmOverloads constructor(context: Context, attrs: Attribute
             titleViewHolderArray.forEach {
                 addView(it.itemView)
             }
-            contentViewHolder?.apply { addView(itemView) }
+            contentViewHolder?.apply {
+                (itemView.parent as ViewManager).removeView(itemView)
+                addView(itemView)
+            }
         }
     }
 

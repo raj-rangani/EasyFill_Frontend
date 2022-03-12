@@ -7,21 +7,26 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.children
+import androidx.core.view.marginBottom
 import com.example.viewpagertest.R
 
 class ProfileGroupAdapter(val dataArray: List<DataModel>) : IAccordianAdapter {
+    override var parentTitle: ViewGroup? = null
+
     override fun onCreateViewHolderForTitle(parent: ViewGroup): AccordianView.ViewHolder {
         return TitleViewHolder.create(parent)
     }
 
     override fun onCreateViewHolderForContent(parent: ViewGroup): AccordianView.ViewHolder {
-        return ContentViewHolder.create(parent)
+        parentTitle = LayoutInflater.from(parent.context).inflate(R.layout.title_view, parent, false) as ViewGroup
+        return ContentViewHolder.create(parentTitle?.findViewById(R.id.contentView)!!)
     }
 
     override fun onBindViewForTitle(viewHolder: AccordianView.ViewHolder, position: Int, arrowDirection: IAccordianAdapter.ArrowDirection) {
         val dataModel = dataArray[position]
         (viewHolder as TitleViewHolder).itemView.apply {
-            this.findViewById<TextView>(R.id.titleTextView).text = dataModel.title
+            var text = this.findViewById<TextView>(R.id.titleTextView)
+
             when (arrowDirection) {
                 IAccordianAdapter.ArrowDirection.UP -> this.findViewById<TextView>(R.id.titleArrowIcon).text = "▲"
                 IAccordianAdapter.ArrowDirection.DOWN -> this.findViewById<TextView>(R.id.titleArrowIcon).text = "▼"
@@ -53,8 +58,8 @@ class TitleViewHolder(itemView: View) : AccordianView.ViewHolder(itemView) {
 
 class ContentViewHolder(itemView: View) : AccordianView.ViewHolder(itemView) {
     companion object {
-        fun create(parent: ViewGroup): ContentViewHolder {
-            return ContentViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.content_view, parent, false))
+        fun create(parent: View): ContentViewHolder {
+            return ContentViewHolder(parent)
         }
     }
 }

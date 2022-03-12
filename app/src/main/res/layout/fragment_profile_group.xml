@@ -1,24 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.example.viewpagertest.adapter.AccordianView
-            android:id="@+id/accordian_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/bottomNavLight"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="2sp"
+                android:layout_marginEnd="2sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="20dp"
+                app:contentPaddingBottom="10sp"
+                app:contentPaddingLeft="20sp"
+                app:contentPaddingRight="20sp"
+                app:contentPaddingTop="10sp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Data"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/profileData"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_chevron_down"
+                        android:backgroundTint="?colorPrimaryVariant"
+                        app:cornerRadius="8dp"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="0dp"
+                        app:iconSize="25dp"
+                        app:iconTint="?colorAccent" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="2sp"
+                android:layout_marginEnd="2sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:elevation="8dp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="20dp"
+                app:contentPaddingBottom="10sp"
+                app:contentPaddingLeft="10sp"
+                app:contentPaddingRight="10sp"
+                app:contentPaddingTop="10sp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <FrameLayout
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Your Father Data"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                        </FrameLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/fatherData"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:insetLeft="0dp"
+                            android:insetRight="0dp"
+                            android:insetTop="0dp"
+                            android:insetBottom="0dp"
+                            app:icon="@drawable/ic_chevron_down"
+                            android:backgroundTint="?colorPrimaryVariant"
+                            android:tooltipText="back"
+                            app:cornerRadius="8dp"
+                            app:iconGravity="textEnd"
+                            app:iconPadding="0dp"
+                            app:iconSize="25dp"
+                            app:iconTint="?colorAccent" />
+
+                    </LinearLayout>
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginStart="2sp"
+                        android:layout_marginEnd="2sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15sp"
+                        android:elevation="8dp"
+                        android:theme="@style/Theme.ViewPagerTest.ProfileDataCards"
+                        app:cardCornerRadius="20dp">
+
+                        <include layout="@layout/user_profile_layout"/>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_marginStart="2sp"
+                android:layout_marginEnd="2sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15sp"
+                android:elevation="8dp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="20dp"
+                app:contentPaddingBottom="10sp"
+                app:contentPaddingLeft="20sp"
+                app:contentPaddingRight="20sp"
+                app:contentPaddingTop="10sp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <FrameLayout
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Your Mother Data"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                    </FrameLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/motherData"
+                        android:focusable="true"
+                        android:clickable="true"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:insetLeft="0dp"
+                        android:insetRight="0dp"
+                        android:insetTop="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_chevron_down"
+                        android:backgroundTint="?colorPrimaryVariant"
+                        android:tooltipText="back"
+                        app:cornerRadius="8dp"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="0dp"
+                        app:iconSize="25dp"
+                        app:iconTint="?colorAccent" />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

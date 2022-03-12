@@ -2,13 +2,15 @@ package com.example.viewpagertest.database
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 import com.example.database.models.FieldSpecifier
 import com.example.database.models.Form
-import com.example.viewpagertest.models.Address
+import com.example.database.models.FormField
+import com.example.viewpagertest.models.*
 
 class MyDatabaseHelper(context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -37,7 +39,7 @@ class MyDatabaseHelper(context: Context) :
             db.execSQL("INSERT INTO Form (authorname,username,fieldspacing,fillpercent) VALUES ('raj','rajbha',20,99)")
 
         } catch (ex: SQLiteException) {
-            Log.e("MyDatabaseHelper","Database already exists.")
+            Log.e("MyDatabaseHelper", "Database already exists.")
         }
     }
 
@@ -45,32 +47,49 @@ class MyDatabaseHelper(context: Context) :
 
     }
 
-    fun getFormData():ArrayList<Form>{
-        val cursor = readableDatabase.query(
-            "Form",
-            arrayOf("*"),
-            null,
-            null,
-            null,
-            null,
-            null
-        )
-        cursor.moveToFirst()
-        val arrayOfForm = arrayListOf<Form>()
-
-        while (!cursor.isAfterLast()) {
-            val form = Form(
-                id = cursor.getInt(0),
-                authorname = cursor.getString(1),
-                username = cursor.getString(2),
-                fieldspacing = cursor.getInt(3),
-                fillpercent = cursor.getInt(3)
+    fun getFormData(id: Int?): ArrayList<Form> {
+        var cursor: Cursor? = null
+        if (id == null) {
+            cursor = readableDatabase.query(
+                "Form",
+                arrayOf("*"),
+                null,
+                null,
+                null,
+                null,
+                null
             )
-            arrayOfForm.add(form)
-            cursor.moveToNext()
         }
-        cursor.close()
-        return arrayOfForm
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "Form",
+                arrayOf("*"),
+                "id",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+        if (!(cursor!!.equals(null))) {
+            cursor.moveToFirst()
+            val arrayOfForm = arrayListOf<Form>()
+
+            while (!cursor.isAfterLast()) {
+                val form = Form(
+                    id = cursor.getInt(0),
+                    authorname = cursor.getString(1),
+                    username = cursor.getString(2),
+                    fieldspacing = cursor.getInt(3),
+                    fillpercent = cursor.getInt(3)
+                )
+                arrayOfForm.add(form)
+                cursor.moveToNext()
+            }
+            cursor.close()
+            return arrayOfForm
+        }
+        return arrayListOf()
     }
 
     fun insertForm(form: Form): Long {
@@ -92,6 +111,68 @@ class MyDatabaseHelper(context: Context) :
 //
     fun deleteForm(id: Int): Int {
         return writableDatabase.delete("Form", "Id = ?", arrayOf(id.toString()))
+    }
+
+
+    fun getFormFieldData(id: Int?): ArrayList<FormField> {
+        var cursor: Cursor? = null
+        if (id == null) {
+            cursor = readableDatabase.query(
+                "FormField",
+                arrayOf("*"),
+                null,
+                null,
+                null,
+                null,
+                null
+            )
+        }
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "FormField",
+                arrayOf("*"),
+                "id",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+        if (!(cursor!!.equals(null))) {
+            cursor.moveToFirst()
+            val arrayOfFormField = arrayListOf<FormField>()
+
+            while (!cursor.isAfterLast()) {
+                val formField = FormField(
+                    id = cursor.getInt(0),
+                    fieldname = cursor.getString(1),
+                    fielddata = cursor.getString(2),
+                    type = cursor.getString(3),
+                )
+                arrayOfFormField.add(formField)
+                cursor.moveToNext()
+            }
+            cursor.close()
+            return arrayOfFormField
+        }
+        return arrayListOf()
+    }
+//form field insert
+    //form field update
+    //form field delete
+
+
+    fun insertFormField(formField: FormField): Long {
+        val values = ContentValues()
+        values.put("street_line_1", formField.fieldname)
+        values.put("area", formField.fielddata)
+        values.put("locality", formField.type)
+
+        return writableDatabase.insert("FormField", null, values)
+    }
+
+    fun deleteFormField(id: Int): Int {
+        return writableDatabase.delete("FormField", "Id = ?", arrayOf(id.toString()))
     }
 
     fun insertAddress(address: Address): Long {
@@ -146,49 +227,171 @@ class MyDatabaseHelper(context: Context) :
         return writableDatabase.delete("Address", "Id = ?", arrayOf(id.toString()))
     }
 
-    fun insertFieldSpecifier(address: FieldSpecifier): Long {
+    fun insertFieldSpecifier(fieldSpecifier: FieldSpecifier): Long {
         val values = ContentValues()
-//        values.put("form", address.form)
-//        values.put("field", address.field)
-        values.put("xaxis", address.xaxis)
-        values.put("yaxis", address.yaxis)
+        values.put("form", fieldSpecifier.form?.id)
+        values.put("field", fieldSpecifier.field?.id)
+        values.put("xaxis", fieldSpecifier.xaxis)
+        values.put("yaxis", fieldSpecifier.yaxis)
 
-        return writableDatabase.insert("Address", null, values)
+        return writableDatabase.insert("FieldSpecifier", null, values)
     }
-//    fun getFieldSpecifierData():ArrayList<Address>{
-//        val cursor = readableDatabase.query(
-//            "Address",
-//            arrayOf("*"),
-//            null,
-//            null,
-//            null,
-//            null,
-//            null
-//        )
-//        cursor.moveToFirst()
-//        val arrayOfAddress = arrayListOf<Address>()
-//
-//        while (!cursor.isAfterLast()) {
-//            val address = Address(
-//                id = cursor.getInt(0),
-//                street_line_1 = cursor.getString(1),
-//                area = cursor.getString(2),
-//                locality = cursor.getString(3),
-//                houseNo = cursor.getString(4),
-//                postOffice = cursor.getString(5),
-//                state = cursor.getString(6),
-//                district = cursor.getString(7),
-//                subDistrict = cursor.getString(8),
-//                city = cursor.getString(9),
-//                pincode = cursor.getString(10)
-//            )
-//            arrayOfAddress.add(address)
-//            cursor.moveToNext()
-//        }
-//        cursor.close()
-//        return arrayOfAddress
-//    }
-//    fun deleteAddress(id: Int): Int {
-//        return writableDatabase.delete("Address", "Id = ?", arrayOf(id.toString()))
-//    }
+
+    fun getFieldSpecifierData():ArrayList<FieldSpecifier>{
+
+        val cursor = readableDatabase.query(
+            "FieldSpecifier",
+            arrayOf("*"),
+            null,
+            null,
+            null,
+            null,
+            null
+        )
+        cursor.moveToFirst()
+        val arrayOfFieldSpecifier = arrayListOf<FieldSpecifier>()
+
+        while (!cursor.isAfterLast()) {
+            val form = getFormData(cursor.getInt(1))[0]
+            val formField = getFormFieldData(cursor.getInt(2))[0]
+            val fieldSpecifier = FieldSpecifier(
+                id = cursor.getInt(0),
+                form = form,
+                field = formField,
+                xaxis = cursor.getFloat(3),
+                yaxis = cursor.getFloat(4)
+            )
+            arrayOfFieldSpecifier.add(fieldSpecifier)
+            cursor.moveToNext()
+        }
+        cursor.close()
+        return arrayOfFieldSpecifier
+    }
+    fun deleteFieldSpecifier(id: Int): Int {
+        return writableDatabase.delete("FieldSpecifier", "Id = ?", arrayOf(id.toString()))
+    }
+
+    fun insertName(name: Name): Long {
+        val values = ContentValues()
+        values.put("firstname", name.firstname)
+        values.put("lastname", name.lastname)
+        values.put("middlename", name.middlename)
+        values.put("fullname", name.fullname)
+
+        return writableDatabase.insert("Name", null, values)
+    }
+
+    fun getNameData(id:Int?):ArrayList<Name>{
+        var cursor: Cursor? = null
+        if (id == null) {
+        cursor = readableDatabase.query(
+            "Name",
+            arrayOf("*"),
+            null,
+            null,
+            null,
+            null,
+            null
+        )}
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "Name",
+                arrayOf("*"),
+                "id",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+        if (!(cursor!!.equals(null))) {
+        cursor.moveToFirst()
+        val arrayOfName = arrayListOf<Name>()
+
+        while (!cursor.isAfterLast()) {
+            val name = Name(
+                id = cursor.getInt(0),
+                firstname = cursor.getString(1),
+                lastname = cursor.getString(2),
+                middlename = cursor.getString(3),
+                fullname = cursor.getString(4)
+            )
+                arrayOfName.add(name)
+                cursor.moveToNext()
+            }
+            cursor.close()
+            return arrayOfName
+        }
+            return arrayListOf()
+    }
+    fun deleteName(id: Int): Int {
+        return writableDatabase.delete("Name", "Id = ?", arrayOf(id.toString()))
+    }
+
+    fun insertParent(parent: Parent): Long {
+        val values = ContentValues()
+        values.put("relation", parent.relation.relation)
+        values.put("name", parent.name.id)
+
+        return writableDatabase.insert("Parent", null, values)
+    }
+    fun getParentData(id:Int?):ArrayList<Parent>{
+        var cursor: Cursor? = null
+        if (id == null) {
+            cursor = readableDatabase.query(
+                "Parent",
+                arrayOf("*"),
+                null,
+                null,
+                null,
+                null,
+                null
+            )}
+        if (id != null) {
+            cursor = readableDatabase.query(
+                "Parent",
+                arrayOf("*"),
+                "id",
+                arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+        if (!(cursor!!.equals(null))) {
+            cursor.moveToFirst()
+            val arrayOfParent = arrayListOf<Parent>()
+            val name = getNameData(cursor.getInt(2))[0]
+
+            while (!cursor.isAfterLast()) {
+                val parent = Parent(
+                    id = cursor.getInt(0),
+                    relation = Relation.N,  //static relation
+                    name = name
+                )
+                arrayOfParent.add(parent)
+                cursor.moveToNext()
+            }
+            cursor.close()
+            return arrayOfParent
+        }
+        return arrayListOf()
+    }
+
+    fun deleteParent(id: Int): Int {
+        return writableDatabase.delete("Parent", "Id = ?", arrayOf(id.toString()))
+    }
+
+    fun insertProfile(profile: Profile): Long {
+        val values = ContentValues()
+        values.put("relation", profile.parent.relation.relation)
+        values.put("username", profile.username)
+        values.put("password", profile.password)
+        values.put("dob", profile.dob)
+        values.put("contact_no", profile.contactNo)
+        values.put("email", profile.email)
+        values.put("gender", profile.gender)
+
+        return writableDatabase.insert("Parent", null, values)
+    }
 }

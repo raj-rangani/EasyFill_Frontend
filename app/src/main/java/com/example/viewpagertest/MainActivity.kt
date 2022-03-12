@@ -27,20 +27,20 @@ class MainActivity : AppCompatActivity()
         setContentView(R.layout.activity_main)
 
         //database create start
-
-
-        try{
-        val dbHelper = MyDatabaseHelper(this)
-            val form = Form(3,"mother","rajbha", 1, 80)
-            val formID = dbHelper.insertForm(form)
-            val arrayOfForm :ArrayList<Form>
-            arrayOfForm = dbHelper.getFormData()
-            Toast.makeText(this, arrayOfForm.toString(), Toast.LENGTH_SHORT).show()
-        }
-        catch(ex:Exception)
-        {
-            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
-        }
+//        try{
+//        val dbHelper = MyDatabaseHelper(this)
+//            val form = Form(3,"mother","rajbha", 1, 80)
+//            val formID = dbHelper.insertForm(form)
+//            val arrayOfForm :ArrayList<Form>
+//            arrayOfForm = dbHelper.getFormData()
+//            Toast.makeText(this, arrayOfForm.toString(), Toast.LENGTH_SHORT).show()
+//        }
+//        catch(ex:Exception)
+//        {
+//            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
+//        }
+//
+//        //TODO: Till Here
 
 //        val playlists = ()
 //        val playlistsID = dbHelper.insertPlaylist(playlists)

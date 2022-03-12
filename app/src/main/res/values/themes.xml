@@ -30,6 +30,11 @@
         <item name="backgroundTint">@color/bottomNavLight</item>
     </style>
 
+    <style name="Theme.ViewPagerTest.ProfileDataCards" parent="Widget.Material3.CardView.Filled">
+        <item name="android:backgroundTint">#BABABA</item>
+        <item name="backgroundTint">#BABABA</item>
+    </style>
+
     <style name="Theme.ViewPagerTest.appBar" parent="@style/ThemeOverlay.Material3.Toolbar.Surface">
         <item name="android:backgroundTint">@color/bottomNavLight</item>
         <item name="backgroundTint">@color/bottomNavLight</item>
