@@ -15,6 +15,7 @@ import android.view.*
 import android.widget.*
 
 import com.example.viewpagertest.api.ProfileApi
+import com.example.viewpagertest.models.Profile
 import com.example.viewpagertest.models.Relation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -82,6 +83,10 @@ class ProfileActivity : AppCompatActivity() {
                     tvUsername.text = it.username
                 }
             }
+        }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            ProfileApi.updateProfile("raj-rangani", "rajrangani@gmail.com", "9929435622", "2002/10/07", "m")
         }
 
 

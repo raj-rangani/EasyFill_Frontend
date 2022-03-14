@@ -1,5 +1,6 @@
 package com.example.viewpagertest.api
 
+import android.util.Log
 import com.example.viewpagertest.models.*
 import org.json.JSONObject
 import java.net.HttpURLConnection
@@ -9,10 +10,10 @@ class ProfileApi {
 
     companion object {
 
-        private const val API_URL = "https://rp-easyfill.herokuapp.com/user/me"
+        private const val API_URL = "https://rp-easyfill.herokuapp.com"
 
         internal fun getProfile(): Profile {
-            val url = URL(API_URL)
+            val url = URL("${API_URL}/user/me")
             val connection = (url.openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
                 doInput = true
@@ -81,6 +82,46 @@ class ProfileApi {
             }
 
             return null!!
+        }
+
+        internal fun updateProfile(username: String, email: String, contactNo:String, dob:String, gender:String): Boolean {
+            val url = URL("${API_URL}/user/me")
+
+            val requestJsonObject = JSONObject()
+            requestJsonObject.put("username", username)
+            requestJsonObject.put("email", email)
+            requestJsonObject.put("contact_no", contactNo)
+            requestJsonObject.put("dob", dob)
+            requestJsonObject.put("gender", gender)
+
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "PUT"
+                doInput = true
+                doOutput = true
+                setRequestProperty("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJyYWoifQ.CVxxR7AAEWqx6WsJXluPxXvYD9CCh8QG6fUMsG3_alw")
+                setRequestProperty("Content-Type", "application/json")
+                setChunkedStreamingMode(0)
+            }
+
+            try {
+                val writer = connection.outputStream.bufferedWriter()
+                writer.write(requestJsonObject.toString())
+                writer.flush()
+
+                val reader = connection.inputStream.bufferedReader()
+                val responseJson = reader.readText()
+
+                return connection.responseCode == HttpURLConnection.HTTP_CREATED
+            }
+
+            catch (Ex: Exception) {
+                Log.i("Profile Update Error", Ex.message.toString())
+            }
+
+            finally {
+                connection.disconnect()
+            }
+            return false
         }
     }
 }
