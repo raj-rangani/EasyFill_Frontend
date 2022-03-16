@@ -396,8 +396,8 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertParent(parent: Parent): Long {
         val values = ContentValues()
-        values.put("relation", parent.relation.relation)
-        values.put("name", parent.name.id)
+        values.put("relation", parent.relation.toString())
+        values.put("nameId", parent.name.id)
 
         return writableDatabase.insert("Parent", null, values)
     }
@@ -435,7 +435,7 @@ class MyDatabaseHelper(context: Context) :
             while (!cursor.isAfterLast()) {
                 val parent = Parent(
                     id = cursor.getInt(0),
-                    relation = Relation.N,  //static relation
+                    relation = Relation.valueOf(cursor.getString(1)),  //static relation
                     name = name
                 )
                 arrayOfParent.add(parent)
@@ -449,7 +449,7 @@ class MyDatabaseHelper(context: Context) :
 
     fun updateParent(parent: Parent, id: Int): Int {
         val values = ContentValues()
-        values.put("relation", parent.relation.relation)
+        values.put("relation", parent.relation.toString())
         values.put("name", parent.name.id)
 
         return writableDatabase.update("Parent", values, "Id = ?", arrayOf(id.toString()))
@@ -461,18 +461,17 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertProfile(profile: Profile): Long {
         val values = ContentValues()
-        values.put("relation", profile.parent.relation.relation)
         values.put("username", profile.username)
         values.put("password", profile.password)
-        values.put("dob", profile.dob)
-        values.put("contact_no", profile.contactNo)
         values.put("email", profile.email)
+        values.put("contactNo", profile.contactNo)
+        values.put("dob", profile.dob)
         values.put("gender", profile.gender)
-        values.put("name",profile.name.id)
-        values.put("address",profile.address.id)
-        values.put("parent",profile.parent.id)
+        values.put("nameId",profile.name.id)
+        values.put("addressId",profile.address.id)
+        values.put("parentId",profile.parent.id)
 
-        return writableDatabase.insert("Parent", null, values)
+        return writableDatabase.insert("Profile", null, values)
     }
 
     fun getProfileData(id:Int?):ArrayList<Profile>{
@@ -491,7 +490,7 @@ class MyDatabaseHelper(context: Context) :
             cursor = readableDatabase.query(
                 "Profile",
                 arrayOf("*"),
-                "id = ?s",
+                "id = ?",
                 arrayOf(id.toString()),
                 null,
                 null,
@@ -536,11 +535,8 @@ class MyDatabaseHelper(context: Context) :
         values.put("contact_no", profile.contactNo)
         values.put("email", profile.email)
         values.put("gender", profile.gender)
-        values.put("name",profile.name.id)
-        values.put("address",profile.address.id)
-        values.put("parent",profile.parent.id)
 
-        return writableDatabase.update("Parent", values, "Id = ?", arrayOf(id.toString()))
+        return writableDatabase.update("Profile", values, "Id = ?", arrayOf(id.toString()))
     }
 
     fun deleteProfile(id: Int): Int {

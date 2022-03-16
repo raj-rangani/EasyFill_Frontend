@@ -69,7 +69,6 @@
                             android:insetBottom="0dp"
                             app:icon="@drawable/ic_chevron_down"
                             android:backgroundTint="?colorPrimaryVariant"
-                            android:tooltipText="back"
                             app:cornerRadius="8dp"
                             app:iconGravity="textEnd"
                             app:iconPadding="0dp"
