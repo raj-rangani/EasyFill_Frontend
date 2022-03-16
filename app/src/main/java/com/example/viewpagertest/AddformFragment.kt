@@ -1,15 +1,16 @@
 package com.example.viewpagertest
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.ListPopupWindow
+import com.example.database.models.Form
+import com.example.viewpagertest.database.MyDatabaseHelper
+import java.text.Normalizer
 
 class AddformFragment : Fragment()
 {
@@ -48,6 +49,16 @@ class AddformFragment : Fragment()
         }
 
         selectProfilePopupButton.setOnClickListener { v: View? -> listProfilePopupWindow.show() }
+
+        val btnAdd = fragmentView.findViewById<Button>(R.id.btnAdd)
+        val author = fragmentView.findViewById<TextView>(R.id.author)
+        btnAdd.setOnClickListener {
+//            val form = Form(null, author.text.toString(), selectFormPopupButton.text.toString(), 20, 0)
+//            MyDatabaseHelper(fragmentView.context).insertForm(form)
+            val intent = Intent(fragmentView.context, DisplayFormActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(context, "Form Added Successfully", Toast.LENGTH_SHORT).show()
+        }
 
         return fragmentView
     }
