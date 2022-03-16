@@ -20,6 +20,7 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.example.viewpagertest.adapter.DataModel
 import com.example.viewpagertest.adapter.ProfileGroupAdapter
+import com.example.viewpagertest.database.MyDatabaseHelper
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 
@@ -49,31 +50,21 @@ class ProfileGroupFragment : Fragment()
         val fatherParentLastname = fatherProfile.findViewById<TextView>(R.id.tvParentlastname)
         val fatherParentMiddlename = fatherProfile.findViewById<TextView>(R.id.tvParentmiddlename)
 
-        /**
-         *  MOTHER PROFILE DATA
-         */
-        val motherFirstname = motherProfile.findViewById<TextView>(R.id.tvFirstname)
-        val motherLastName = motherProfile.findViewById<TextView>(R.id.tvLastname)
-        val motherMiddlename = motherProfile.findViewById<TextView>(R.id.tvMiddlename)
-        val motherFullname = motherProfile.findViewById<TextView>(R.id.tvFullname)
-        val motherParentrelation = motherProfile.findViewById<TextView>(R.id.tvRelation)
-        val motherParentFullname = motherProfile.findViewById<TextView>(R.id.tvParentfullname)
-        val motherParentFirstname = motherProfile.findViewById<TextView>(R.id.tvParentfirstname)
-        val motherParentLastname = motherProfile.findViewById<TextView>(R.id.tvParentlastname)
-        val motherParentMiddlename = motherProfile.findViewById<TextView>(R.id.tvParentmiddlename)
 
         /**
          *  YOUR PROFILE DATA
          */
-        val yourFirstname = yourProfile.findViewById<TextView>(R.id.tvFirstname)
-        val yourLastName = yourProfile.findViewById<TextView>(R.id.tvLastname)
-        val yourMiddlename = yourProfile.findViewById<TextView>(R.id.tvMiddlename)
-        val yourFullname = yourProfile.findViewById<TextView>(R.id.tvFullname)
-        val yourParentrelation = yourProfile.findViewById<TextView>(R.id.tvRelation)
-        val yourParentFullname = yourProfile.findViewById<TextView>(R.id.tvParentfullname)
-        val yourParentFirstname = yourProfile.findViewById<TextView>(R.id.tvParentfirstname)
-        val yourParentLastname = yourProfile.findViewById<TextView>(R.id.tvParentlastname)
-        val yourParentMiddlename = yourProfile.findViewById<TextView>(R.id.tvParentmiddlename)
+
+
+
+
+        val dbHelper = MyDatabaseHelper(fragmentView.context)
+
+        val profile = dbHelper.getProfileData(null)[0]
+        val getFatherProfile = dbHelper.getProfileData(2)[0]
+        Toast.makeText(fragmentView.context, profile.toString(), Toast.LENGTH_SHORT).show()
+
+
 
         fatherProfile.setOnClickListener {
             val fatherProfileCard = fragmentView.findViewById<CardView>(R.id.parentCard)
@@ -86,6 +77,17 @@ class ProfileGroupFragment : Fragment()
                 fatherProfileCard.visibility = View.VISIBLE
                 fatherProfileCard.tag = "open"
                 fatherProfile.setIconResource(R.drawable.ic_chevron_up)
+
+                view.findViewById<TextView>(R.id.tvFirstname).text = getFatherProfile.name.firstname.uppercase()
+                view.findViewById<TextView>(R.id.tvLastname).text = getFatherProfile.name.lastname.uppercase()
+                view.findViewById<TextView>(R.id.tvMiddlename).text = getFatherProfile.name.middlename.uppercase()
+                view.findViewById<TextView>(R.id.tvFullname).text = getFatherProfile.name.fullname.uppercase()
+                view.findViewById<TextView>(R.id.tvRelation).text = getFatherProfile.parent.relation.relation.uppercase()
+                view.findViewById<TextView>(R.id.tvParentfullname).text = getFatherProfile.parent.name.fullname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentfirstname).text = getFatherProfile.parent.name.firstname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentlastname).text = getFatherProfile.parent.name.lastname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentmiddlename).text = getFatherProfile.parent.name.middlename.uppercase()
+
             } else {
                 fatherProfileCard.removeView(view)
                 fatherProfileCard.visibility = View.GONE
@@ -106,6 +108,17 @@ class ProfileGroupFragment : Fragment()
                 motherProfileCard.visibility = View.VISIBLE
                 motherProfileCard.tag = "open"
                 motherProfile.setIconResource(R.drawable.ic_chevron_up)
+
+                view.findViewById<TextView>(R.id.tvFirstname).text
+                view.findViewById<TextView>(R.id.tvLastname).text
+                view.findViewById<TextView>(R.id.tvMiddlename).text
+                view.findViewById<TextView>(R.id.tvFullname).text
+                view.findViewById<TextView>(R.id.tvRelation).text
+                view.findViewById<TextView>(R.id.tvParentfullname).text
+                view.findViewById<TextView>(R.id.tvParentfirstname).text
+                view.findViewById<TextView>(R.id.tvParentlastname).text
+                view.findViewById<TextView>(R.id.tvParentmiddlename).text
+
             } else {
                 motherProfileCard.removeView(view)
                 motherProfileCard.visibility = View.GONE
@@ -125,6 +138,21 @@ class ProfileGroupFragment : Fragment()
                 yourProfileCard.visibility = View.VISIBLE
                 yourProfileCard.tag = "open"
                 yourProfile.setIconResource(R.drawable.ic_chevron_up)
+
+                /**
+                 * Text Fields Data Set
+                 */
+
+                view.findViewById<TextView>(R.id.tvFirstname).text = profile.name.firstname.uppercase()
+                view.findViewById<TextView>(R.id.tvLastname).text = profile.name.lastname.uppercase()
+                view.findViewById<TextView>(R.id.tvMiddlename).text = profile.name.middlename.uppercase()
+                view.findViewById<TextView>(R.id.tvFullname).text = profile.name.fullname.uppercase()
+                view.findViewById<TextView>(R.id.tvRelation).text = profile.parent.relation.relation.uppercase()
+                view.findViewById<TextView>(R.id.tvParentfullname).text = profile.parent.name.fullname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentfirstname).text = profile.parent.name.firstname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentlastname).text = profile.parent.name.lastname.uppercase()
+                view.findViewById<TextView>(R.id.tvParentmiddlename).text = profile.parent.name.middlename.uppercase()
+
             } else {
                 yourProfileCard.removeView(view)
                 yourProfileCard.visibility = View.GONE

@@ -15,6 +15,7 @@ import com.example.database.models.FieldSpecifier
 import com.example.viewpagertest.database.MyDatabaseHelper
 import com.example.database.models.Form
 import com.example.database.models.FormField
+import com.example.viewpagertest.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
 import java.lang.Exception
@@ -26,6 +27,10 @@ class MainActivity : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
+        insert_Profile()
+        insert_Profile_father()
+        insert_Profile_mother()
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -167,4 +172,68 @@ class MainActivity : AppCompatActivity()
             commit()
         }
     }
+
+    private fun insert_Profile(){
+        val dbHelper = MyDatabaseHelper(this)
+
+        val name = Name(null,"Rangani","Raj","J","Rangani Raj J")
+        name.id = dbHelper.insertName(name).toInt()
+
+        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
+        address.id = dbHelper.insertAddress(address).toInt()
+
+        val parentName = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
+        parentName.id = dbHelper.insertName(parentName).toInt()
+
+        val parent = Parent(null,Relation.F,parentName)
+        parent.id = dbHelper.insertParent(parent).toInt()
+
+        val profile = Profile(null,"RajRangani","0000","RajRangani@test.com","1234567890","17-10-2002","Male",name,address,parent)
+        profile.id = dbHelper.insertProfile(profile).toInt()
+
+//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    private fun insert_Profile_father(){
+        val dbHelper = MyDatabaseHelper(this)
+
+        val name = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
+        name.id = dbHelper.insertName(name).toInt()
+
+        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
+        address.id = dbHelper.insertAddress(address).toInt()
+
+        val parentName = Name(null,"Vinubhai","Rangani","R","Vinubhai R Rangani")
+        parentName.id = dbHelper.insertName(parentName).toInt()
+
+        val parent = Parent(null,Relation.F,parentName)
+        parent.id = dbHelper.insertParent(parent).toInt()
+
+        val profile = Profile(null,"JayeshbhaiRangani","0000","RajRangani0000@test.com","1234500000","01-01-2001","Male",name,address,parent)
+        profile.id = dbHelper.insertProfile(profile).toInt()
+
+//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
+    }
+    private fun insert_Profile_mother(){
+        val dbHelper = MyDatabaseHelper(this)
+
+        val name = Name(null,"Ushaben","Rangani","J","Ushaben J Rangani")
+        name.id = dbHelper.insertName(name).toInt()
+
+        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
+        address.id = dbHelper.insertAddress(address).toInt()
+
+        val parentName = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
+        parentName.id = dbHelper.insertName(parentName).toInt()
+
+        val parent = Parent(null,Relation.W,parentName)
+        parent.id = dbHelper.insertParent(parent).toInt()
+
+        val profile = Profile(null,"UshabenRangani","0000","UshaRangani0000@test.com","1234500000","01-01-2001","Female",name,address,parent)
+        profile.id = dbHelper.insertProfile(profile).toInt()
+
+//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
+    }
+
+
 }
