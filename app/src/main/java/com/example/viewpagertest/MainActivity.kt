@@ -142,6 +142,7 @@ class MainActivity : AppCompatActivity()
             R.id.menuHome -> setCurrentFragment(HomeFragment.INSTANCE)
             R.id.menuPdf -> setCurrentFragment(PdfFragment.INSTANCE)
             R.id.menuProfileGroup -> setCurrentFragment(ProfileGroupFragment.INSTANCE)
+            R.id.menuAddform -> setCurrentFragment(AddformFragment.INSTANCE)
         }
     }
 
@@ -152,6 +153,7 @@ class MainActivity : AppCompatActivity()
             R.id.menuHome -> setCurrentFragment(HomeFragment.INSTANCE)
             R.id.menuPdf -> setCurrentFragment(PdfFragment.INSTANCE)
             R.id.menuProfileGroup -> setCurrentFragment(ProfileGroupFragment.INSTANCE)
+            R.id.menuAddform -> setCurrentFragment(AddformFragment.INSTANCE)
             else -> return false
         }
 

@@ -16,4 +16,8 @@
 
     <color name="bottomNavLight">#F4F4F4</color>
     <color name="bottomNavDark">#191919</color>
+
+    <color name="success">#A3FFA7</color>
+    <color name="warning">#FFF27F</color>
+    <color name="error">#FF8484</color>
 </resources>

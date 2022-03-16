@@ -26,9 +26,11 @@ class HomeFragment : Fragment()
 
         // This loop will create 20 Views containing
         // the image with the count of view
-        for (i in 1..10) {
-            data.add(Form(null, "raj-rangani", "abc", 20, i*10))
-        }
+        data.add(Form(1, "Raj Rangani", "Adhar card Form", 10, 20))
+        data.add(Form(2, "Parth Trilokchandani", "Adhar card Form", 10, 60))
+        data.add(Form(3, "Raj Rangani", "Pan Card Form", 10, 50))
+        data.add(Form(4, "Sachin Sudani", "Voting card Form", 10, 90))
+        data.add(Form(5, "Bhavik Mungra", "Adhar card Form", 10, 20))
 
         // This will pass the ArrayList to our Adapter
         val adapter = HomeCardAdapter(data)

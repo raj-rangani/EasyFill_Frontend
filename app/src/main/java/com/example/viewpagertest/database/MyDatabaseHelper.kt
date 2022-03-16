@@ -28,15 +28,13 @@ class MyDatabaseHelper(context: Context) :
             if (db == null)
                 return
 
-            db.execSQL("CREATE TABLE Form (Id INTEGER PRIMARY KEY AUTOINCREMENT, authorname TEXT NOT NULL, username TEXT NOT NULL, fieldspacing INTEGER NOT NULL, fillpercent INTEGER NOT NULL)")
+            db.execSQL("CREATE TABLE Form (Id INTEGER PRIMARY KEY AUTOINCREMENT, author_name TEXT NOT NULL, form_name TEXT NOT NULL, field_spacing INTEGER NOT NULL, fill_percent INTEGER NOT NULL)")
             db.execSQL("CREATE TABLE Address (Id INTEGER PRIMARY KEY AUTOINCREMENT,street_line_1 TEXT NOT NULL, area TEXT NOT NULL,locality TEXT NOT NULL,houseNo TEXT NOT NULL,postOffice TEXT NOT NULL,state TEXT NOT NULL,district TEXT NOT NULL,subDistrict TEXT NOT NULL,city TEXT NOT NULL,pincode TEXT NOT NULL )")
-            db.execSQL("CREATE TABLE FormField (Id INTEGER PRIMARY KEY AUTOINCREMENT, fieldname TEXT NOT NULL, fielddata TEXT NOT NULL, type TEXT NOT NULL)")
+            db.execSQL("CREATE TABLE FormField (Id INTEGER PRIMARY KEY AUTOINCREMENT, field_name TEXT NOT NULL, type TEXT NOT NULL)")
             db.execSQL("CREATE TABLE Name (Id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT NOT NULL, lastname TEXT NOT NULL, middlename TEXT NOT NULL, fullname TEXT NOT NULL)")
             db.execSQL("CREATE TABLE FieldSpecifier (Id INTEGER PRIMARY KEY AUTOINCREMENT, formId LONG NOT NULL, fieldId LONG NOT NULL, xaxis FLOAT NOT NULL, yaxis FLOAT NOT NULL, FOREIGN KEY(formId) REFERENCES Form(Id) ON DELETE CASCADE, FOREIGN KEY(fieldId) REFERENCES FormField(Id) ON DELETE CASCADE)")
             db.execSQL("CREATE TABLE Parent (Id INTEGER PRIMARY KEY AUTOINCREMENT, relation TEXT NOT NULL, nameId LONG NOT NULL, FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE)")
             db.execSQL("CREATE TABLE Profile (Id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, contactNo TEXT NOT NULL, dob TEXT NOT NULL, gender TEXT NOT NULL, nameId LONG NOT NULL, addressId LONG NOT NULL, parentId LONG NOT NULL,FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE,FOREIGN KEY(addressId) REFERENCES Address(Id) ON DELETE CASCADE,FOREIGN KEY(parentId) REFERENCES Parent(Id) ON DELETE CASCADE)")
-
-            db.execSQL("INSERT INTO Form (authorname,username,fieldspacing,fillpercent) VALUES ('raj','rajbha',20,99)")
 
         } catch (ex: SQLiteException) {
             Log.e("MyDatabaseHelper", "Database already exists.")
@@ -79,7 +77,7 @@ class MyDatabaseHelper(context: Context) :
                 val form = Form(
                     id = cursor.getInt(0),
                     authorname = cursor.getString(1),
-                    username = cursor.getString(2),
+                    formname = cursor.getString(2),
                     fieldspacing = cursor.getInt(3),
                     fillpercent = cursor.getInt(3)
                 )
@@ -94,25 +92,27 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertForm(form: Form): Long {
         val values = ContentValues()
-        values.put("authorname", form.authorname)
-        values.put("fieldspacing", form.fieldspacing)
-        values.put("fillpercent", form.fillpercent)
-        values.put("username", form.username)
+        values.put("author_name", form.authorname)
+        values.put("field_spacing", form.fieldspacing)
+        values.put("fill_percent", form.fillpercent)
+        values.put("form_name", form.formname)
 
         return writableDatabase.insert("Form", null, values)
     }
-//
-//    fun updatePlaylists(playlist: Form, id: Int): Int {
-//        val values = ContentValues()
-//        values.put("Name", playlist.name)
-//
-//        return writableDatabase.update("Playlists", values, "Id = ?", arrayOf(id.toString()))
-//    }
-//
+
+    fun updateForm(form: Form, id: Int): Int {
+        val values = ContentValues()
+        values.put("author_name", form.authorname)
+        values.put("field_spacing", form.fieldspacing)
+        values.put("fill_percent", form.fillpercent)
+        values.put("form_name", form.formname)
+
+        return writableDatabase.update("Form", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteForm(id: Int): Int {
         return writableDatabase.delete("Form", "Id = ?", arrayOf(id.toString()))
     }
-
 
     fun getFormFieldData(id: Int?): ArrayList<FormField> {
         var cursor: Cursor? = null
@@ -127,6 +127,7 @@ class MyDatabaseHelper(context: Context) :
                 null
             )
         }
+
         if (id != null) {
             cursor = readableDatabase.query(
                 "FormField",
@@ -138,6 +139,7 @@ class MyDatabaseHelper(context: Context) :
                 null
             )
         }
+
         if (!(cursor!!.equals(null))) {
             cursor.moveToFirst()
             val arrayOfFormField = arrayListOf<FormField>()
@@ -146,8 +148,7 @@ class MyDatabaseHelper(context: Context) :
                 val formField = FormField(
                     id = cursor.getInt(0),
                     fieldname = cursor.getString(1),
-                    fielddata = cursor.getString(2),
-                    type = cursor.getString(3),
+                    type = cursor.getString(2),
                 )
                 arrayOfFormField.add(formField)
                 cursor.moveToNext()
@@ -157,23 +158,27 @@ class MyDatabaseHelper(context: Context) :
         }
         return arrayListOf()
     }
-//form field insert
-    //form field update
-    //form field delete
-
 
     fun insertFormField(formField: FormField): Long {
         val values = ContentValues()
         values.put("fieldname", formField.fieldname)
-        values.put("fielddata", formField.fielddata)
         values.put("type", formField.type)
 
         return writableDatabase.insert("FormField", null, values)
     }
 
+    fun updateFormField(formField: FormField, id: Int): Int {
+        val values = ContentValues()
+        values.put("fieldname", formField.fieldname)
+        values.put("type", formField.type)
+
+        return writableDatabase.update("FormField", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteFormField(id: Int): Int {
         return writableDatabase.delete("FormField", "Id = ?", arrayOf(id.toString()))
     }
+
 
     fun insertAddress(address: Address): Long {
         val values = ContentValues()
@@ -190,6 +195,7 @@ class MyDatabaseHelper(context: Context) :
 
         return writableDatabase.insert("Address", null, values)
     }
+
     fun getAddressData(id: Int?):ArrayList<Address>{
         var cursor: Cursor? = null
         if (id == null) {
@@ -241,12 +247,30 @@ class MyDatabaseHelper(context: Context) :
         }
         return arrayListOf()
     }
+
+    fun updateAddress(address: Address, id: Int): Int {
+        val values = ContentValues()
+        values.put("street_line_1", address.street_line_1)
+        values.put("area", address.area)
+        values.put("locality", address.locality)
+        values.put("houseNo", address.houseNo)
+        values.put("postOffice", address.postOffice)
+        values.put("state", address.state)
+        values.put("district", address.district)
+        values.put("subDistrict", address.subDistrict)
+        values.put("city", address.city)
+        values.put("pincode", address.pincode)
+
+        return writableDatabase.update("Address", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteAddress(id: Int): Int {
         return writableDatabase.delete("Address", "Id = ?", arrayOf(id.toString()))
     }
 
     fun insertFieldSpecifier(fieldSpecifier: FieldSpecifier): Long {
         val values = ContentValues()
+
         values.put("formId", fieldSpecifier.form?.id)
         values.put("fieldId", fieldSpecifier.field?.id)
         values.put("xaxis", fieldSpecifier.xaxis)
@@ -285,6 +309,18 @@ class MyDatabaseHelper(context: Context) :
         cursor.close()
         return arrayOfFieldSpecifier
     }
+
+    fun updateFieldSpecifier(fieldSpecifier: FieldSpecifier, id: Int): Int {
+        val values = ContentValues()
+
+        values.put("formId", fieldSpecifier.form?.id)
+        values.put("fieldId", fieldSpecifier.field?.id)
+        values.put("xaxis", fieldSpecifier.xaxis)
+        values.put("yaxis", fieldSpecifier.yaxis)
+
+        return writableDatabase.update("FieldSpecifier", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteFieldSpecifier(id: Int): Int {
         return writableDatabase.delete("FieldSpecifier", "Id = ?", arrayOf(id.toString()))
     }
@@ -342,6 +378,18 @@ class MyDatabaseHelper(context: Context) :
         }
             return arrayListOf()
     }
+
+
+    fun updateName(name: Name, id: Int): Int {
+        val values = ContentValues()
+        values.put("firstname", name.firstname)
+        values.put("lastname", name.lastname)
+        values.put("middlename", name.middlename)
+        values.put("fullname", name.fullname)
+
+        return writableDatabase.update("Name", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteName(id: Int): Int {
         return writableDatabase.delete("Name", "Id = ?", arrayOf(id.toString()))
     }
@@ -353,6 +401,7 @@ class MyDatabaseHelper(context: Context) :
 
         return writableDatabase.insert("Parent", null, values)
     }
+
     fun getParentData(id:Int?):ArrayList<Parent>{
         var cursor: Cursor? = null
         if (id == null) {
@@ -364,7 +413,9 @@ class MyDatabaseHelper(context: Context) :
                 null,
                 null,
                 null
-            )}
+            )
+        }
+
         if (id != null) {
             cursor = readableDatabase.query(
                 "Parent",
@@ -394,6 +445,14 @@ class MyDatabaseHelper(context: Context) :
             return arrayOfParent
         }
         return arrayListOf()
+    }
+
+    fun updateParent(parent: Parent, id: Int): Int {
+        val values = ContentValues()
+        values.put("relation", parent.relation.relation)
+        values.put("name", parent.name.id)
+
+        return writableDatabase.update("Parent", values, "Id = ?", arrayOf(id.toString()))
     }
 
     fun deleteParent(id: Int): Int {
@@ -467,6 +526,23 @@ class MyDatabaseHelper(context: Context) :
         }
         return arrayListOf()
     }
+
+    fun updateProfile(profile: Profile, id: Int): Int {
+        val values = ContentValues()
+        values.put("relation", profile.parent.relation.relation)
+        values.put("username", profile.username)
+        values.put("password", profile.password)
+        values.put("dob", profile.dob)
+        values.put("contact_no", profile.contactNo)
+        values.put("email", profile.email)
+        values.put("gender", profile.gender)
+        values.put("name",profile.name.id)
+        values.put("address",profile.address.id)
+        values.put("parent",profile.parent.id)
+
+        return writableDatabase.update("Parent", values, "Id = ?", arrayOf(id.toString()))
+    }
+
     fun deleteProfile(id: Int): Int {
         return writableDatabase.delete("Profile", "Id = ?", arrayOf(id.toString()))
     }

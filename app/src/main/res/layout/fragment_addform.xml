@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:padding="2sp"
+    tools:ignore="hardcodedText">
+
+    <LinearLayout
+        android:layout_marginTop="2sp"
+        android:layout_marginStart="2sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="18sp"
+            android:text="Add New Form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_marginStart="5sp"
+            android:text="Enter Name (Author)"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:textSize="15sp"
+            android:layout_marginTop="4sp"
+            android:padding="12sp"
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:background="@drawable/corner_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="5sp"
+            android:layout_marginStart="5sp"
+            android:text="Select Form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:textColor="?colorOnBackground"
+            app:cornerRadius="15sp"
+            android:id="@+id/selectForm"
+            android:layout_width="match_parent"
+            android:layout_height="55sp"
+            android:text="Select Form"/>
+
+        <TextView
+            android:layout_marginTop="5sp"
+            android:layout_marginStart="5sp"
+            android:text="Select for whom to Fill Form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:textColor="?colorOnBackground"
+            app:cornerRadius="15sp"
+            android:id="@+id/selectProfile"
+            android:layout_width="match_parent"
+            android:layout_height="55sp"
+            android:text="Select Profile"/>
+
+        <com.google.android.material.button.MaterialButton
+            app:icon="@drawable/ic_file_new"
+            app:cornerRadius="15sp"
+            app:iconGravity="textStart"
+            app:iconSize="16sp"
+            android:layout_marginTop="25sp"
+            android:id="@+id/btnAdd"
+            android:layout_width="match_parent"
+            android:layout_height="55sp"
+            android:text="Add Form"/>
+
+    </LinearLayout>
+
+</LinearLayout>
