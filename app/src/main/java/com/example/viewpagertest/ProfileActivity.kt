@@ -19,10 +19,12 @@ import com.example.viewpagertest.api.ProfileApi
 import com.example.viewpagertest.models.Profile
 import com.example.viewpagertest.models.Relation
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 
 class ProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,31 +104,60 @@ class ProfileActivity : AppCompatActivity() {
 
         }
 
-
-        CoroutineScope(Dispatchers.IO).launch {
-            val data = ProfileApi.updateProfile("raj-rangani", "rajrangani@gmail.com", "9929435622", "2002/10/07", "m")
-            withContext(Dispatchers.Main) {
-                Toast.makeText(this@ProfileActivity, data.toString(), Toast.LENGTH_SHORT).show()
-            }
-        }
-
         back.setOnClickListener {
             finish()
         }
 
         user.setOnClickListener {
-            showDialog()
-        }
-    }
+            val dialog = Dialog(this)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.bottom_sheet_user_update_layout)
+            dialog.show()
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
+            dialog.window?.setGravity(Gravity.BOTTOM)
 
-    private fun showDialog() {
-        val dialog = Dialog(this)
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialog.setContentView(R.layout.bottom_sheet_user_update_layout)
-        dialog.show()
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.window?.attributes?.windowAnimations = R.style.DialogAnimation
-        dialog.window?.setGravity(Gravity.BOTTOM)
+            val authPrefs = getSharedPreferences("AUTH", MODE_PRIVATE)
+            val token = authPrefs.getString("TOKEN", "[No Data]")!!
+            val username = dialog.findViewById<EditText>(R.id.etUsername)
+            val email = dialog.findViewById<EditText>(R.id.etEmail)
+            val phone = dialog.findViewById<EditText>(R.id.etContact)
+
+            val userUpdate = dialog.findViewById<Button>(R.id.userUpdate)
+            dialog.findViewById<Button>(R.id.close).setOnClickListener { dialog.hide() }
+            userUpdate.setOnClickListener {
+                dialog.hide()
+            CoroutineScope(Dispatchers.IO).launch {
+                val data = ProfileApi.updateProfile(username.text.toString(), email.text.toString(), phone.text.toString(), "2002/10/07", "m", token)
+                withContext(Dispatchers.Main) {
+                    if(data[0].toString().toBoolean()) {
+                        val json: JSONObject = data[1] as JSONObject
+                        val prefsProfile = getSharedPreferences("PROFILES", MODE_PRIVATE)
+                        val profileJson = prefsProfile.getString("Profile", "[NO DATA]")
+
+                        if(!(profileJson.equals("[NO DATA]"))) {
+                            if (!(profileJson.equals(null))) {
+                                val profile = Gson().fromJson(profileJson, Profile::class.java)
+                                profile.username = json.getString("username")
+                                profile.contactNo = json.getString("contact_no")
+                                profile.email = json.getString("email")
+                                profile.gender = json.getString("gender")
+                                profile.dob = json.getString("dob")
+
+                                val profileEdit = prefsProfile.edit()
+                                profileEdit.putString("Profile", Gson().toJson(profile))
+                                profileEdit.apply()
+                            }
+                            Toast.makeText(this@ProfileActivity, "Profile Updated", Toast.LENGTH_SHORT).show()
+                            dialog.hide()
+                        }
+                    } else {
+                        Toast.makeText(this@ProfileActivity, data[1].toString(), Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            }
+        }
     }
 }

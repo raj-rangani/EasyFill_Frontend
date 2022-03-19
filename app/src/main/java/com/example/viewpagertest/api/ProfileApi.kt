@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.example.viewpagertest.models.*
+import com.google.gson.JsonObject
 import org.json.JSONObject
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
@@ -106,7 +107,7 @@ class ProfileApi {
             return null
         }
 
-        internal fun updateProfile(username: String, email: String, contactNo:String, dob:String, gender:String): Boolean {
+        internal fun updateProfile(username: String, email: String, contactNo:String, dob:String, gender:String, token:String): Array<Any> {
             val url = URL("${API_URL}/user/me")
 
             val requestJsonObject = JSONObject()
@@ -120,21 +121,27 @@ class ProfileApi {
                 requestMethod = "PUT"
                 doInput = true
                 doOutput = true
-                setRequestProperty("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJyYWoifQ.CVxxR7AAEWqx6WsJXluPxXvYD9CCh8QG6fUMsG3_alw")
+                setRequestProperty("Authorization", "Bearer $token")
                 setRequestProperty("Content-Type", "application/json")
                 setRequestProperty("Accept", "application/json")
             }
 
             try {
                 val writer = OutputStreamWriter(connection.outputStream)
-                writer.write(String.format("{\"username\": \"raj patel\"}"))
+                writer.write(requestJsonObject.toString())
                 writer.flush()
                 writer.close()
 
-                val reader = connection.inputStream.bufferedReader()
-                val responseJson = reader.readText()
+                if(connection.responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    val reader = connection.errorStream.bufferedReader()
+                    val responseJson = JSONObject(reader.readText())
 
-                return connection.responseCode == HttpURLConnection.HTTP_CREATED
+                    return arrayOf(false, responseJson.getString("error"))
+                } else {
+                    val reader = connection.inputStream.bufferedReader()
+                    val responseJson = JSONObject(reader.readText())
+                    return arrayOf(true, responseJson)
+                }
             }
 
             catch (Ex: Exception) {
@@ -144,7 +151,8 @@ class ProfileApi {
             finally {
                 connection.disconnect()
             }
-            return false
+
+            return arrayOf(false, "Invalid Data")
         }
 
         internal fun createProfile(username: String, email: String, contactNo:String, password:String) : Array<Any> {
