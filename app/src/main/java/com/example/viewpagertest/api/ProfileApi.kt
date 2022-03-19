@@ -154,6 +154,52 @@ class ProfileApi {
 
             return arrayOf(false, "Invalid Data")
         }
+        internal fun updateName(firstname: String, lastname: String, middlename:String, fullname:String, token:String): Array<Any> {
+            val url = URL("${API_URL}/user/name")
+
+            val requestJsonObject = JSONObject()
+            requestJsonObject.put("firstname", firstname)
+            requestJsonObject.put("lastname", lastname)
+            requestJsonObject.put("middlename", middlename)
+            requestJsonObject.put("fullname", fullname)
+
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "PUT"
+                doInput = true
+                doOutput = true
+                setRequestProperty("Authorization", "Bearer $token")
+                setRequestProperty("Content-Type", "application/json")
+                setRequestProperty("Accept", "application/json")
+            }
+
+            try {
+                val writer = OutputStreamWriter(connection.outputStream)
+                writer.write(requestJsonObject.toString())
+                writer.flush()
+                writer.close()
+
+                if(connection.responseCode == HttpURLConnection.HTTP_BAD_REQUEST) {
+                    val reader = connection.errorStream.bufferedReader()
+                    val responseJson = JSONObject(reader.readText())
+
+                    return arrayOf(false, responseJson.getString("error"))
+                } else {
+                    val reader = connection.inputStream.bufferedReader()
+                    val responseJson = JSONObject(reader.readText())
+                    return arrayOf(true, responseJson)
+                }
+            }
+
+            catch (Ex: Exception) {
+                Log.i("Profile Update Error", Ex.message.toString())
+            }
+
+            finally {
+                connection.disconnect()
+            }
+
+            return arrayOf(false, "Invalid Data")
+        }
 
         internal fun createProfile(username: String, email: String, contactNo:String, password:String) : Array<Any> {
             val url = URL("${API_URL}/user")
