@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:layout_margin="10sp"
+    android:layout_margin="10dp"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <LinearLayout
         android:orientation="vertical"
@@ -51,7 +51,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="?colorOnBackground"
-                android:text="Welcome to Easy Fill"
+                android:text="Let's Create Account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -59,34 +59,20 @@
                 android:textColor="?colorTertiary"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:text="Sign in to sync your profile across multiple devices."
+                android:text="Create an Easy Fill Account to get all features"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
 
         <LinearLayout
-            android:gravity="center"
-            android:layout_marginTop="10sp"
-            android:layout_marginBottom="10sp"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:src="@drawable/bg_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+            android:layout_weight="1"
             android:layout_marginTop="20sp"
             android:gravity="center"
             android:orientation="vertical"
             android:paddingStart="15sp"
             android:paddingEnd="15sp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="0dp">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cdUsername"
@@ -136,6 +122,101 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_marginTop="15sp"
                 android:layout_marginBottom="10sp"
+                android:id="@+id/cdEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="15dp"
+                app:contentPadding="6sp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:background="@android:color/transparent"
+                        android:id="@+id/icEmail"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_lock_on"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="0dp"
+                        app:iconSize="22dp"
+                        app:iconTint="?colorOnBackground" />
+
+                    <EditText
+                        android:inputType="textEmailAddress"
+                        android:id="@+id/etEmail"
+                        android:hint="email"
+                        android:layout_marginStart="5sp"
+                        android:includeFontPadding="false"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="10sp"
+                android:id="@+id/cdPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="15dp"
+                app:contentPadding="6sp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:background="@android:color/transparent"
+                        android:id="@+id/icContact"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_phone_outline"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="0dp"
+                        app:iconSize="22dp"
+                        app:iconTint="?colorOnBackground" />
+
+                    <EditText
+                        android:inputType="number"
+                        android:id="@+id/etContact"
+                        android:hint="phone"
+                        android:layout_marginStart="5sp"
+                        android:includeFontPadding="false"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="10sp"
                 android:id="@+id/cdPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -180,15 +261,62 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+            <com.google.android.material.card.MaterialCardView
+                android:layout_marginTop="15sp"
+                android:layout_marginBottom="10sp"
+                android:id="@+id/cdConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:theme="@style/Theme.ViewPagerTest.ProfileCards"
+                app:cardCornerRadius="15dp"
+                app:contentPadding="6sp">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:background="@android:color/transparent"
+                        android:id="@+id/icConfirmPassword"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        app:icon="@drawable/ic_lock_on"
+                        app:iconGravity="textEnd"
+                        app:iconPadding="0dp"
+                        app:iconSize="22dp"
+                        app:iconTint="?colorOnBackground" />
+
+                    <EditText
+                        android:inputType="textPassword"
+                        android:id="@+id/etConfirmPassword"
+                        android:hint="confirm password"
+                        android:layout_marginStart="5sp"
+                        android:includeFontPadding="false"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:padding="0dp"
+                        android:layout_height="wrap_content"/>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/login"
+                android:id="@+id/register"
                 app:cornerRadius="50dp"
                 android:padding="8dp"
                 android:layout_marginTop="10sp"
                 android:paddingStart="25sp"
                 android:paddingEnd="25sp"
                 android:backgroundTint="?colorPrimary"
-                android:text="Sign In"
+                android:text="Create Account"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
@@ -196,10 +324,10 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/signIn"
+            android:layout_marginTop="40sp"
             android:clickable="true"
             android:focusable="true"
-            android:id="@+id/signUp"
-            android:layout_marginTop="40sp"
             android:gravity="center"
             android:layout_marginBottom="20sp"
             android:layout_marginStart="20sp"
@@ -212,7 +340,7 @@
                 android:textColor="?colorTertiary"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:text="Create an Easy Fill Account,"
+                android:text="Already Have an Easy Fill Account,"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
@@ -221,11 +349,12 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="?colorOnBackground"
-                android:text="Sign Up"
+                android:text="Sign In"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

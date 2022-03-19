@@ -1,16 +1,13 @@
 package com.example.viewpagertest.adapter
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.database.models.Form
+import com.example.viewpagertest.models.Form
 import com.example.viewpagertest.R
 import com.google.android.material.progressindicator.CircularProgressIndicator
 

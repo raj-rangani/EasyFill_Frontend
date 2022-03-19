@@ -17,6 +17,7 @@ import android.widget.*
 import com.example.viewpagertest.api.ProfileApi
 import com.example.viewpagertest.models.Profile
 import com.example.viewpagertest.models.Relation
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -55,38 +56,44 @@ class ProfileActivity : AppCompatActivity() {
         val tvParentlastname = findViewById<TextView>(R.id.tvParentlastname)
         val tvParentfullname = findViewById<TextView>(R.id.tvParentfullname)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            ProfileApi.getProfile().also {
-                withContext(Dispatchers.Main) {
-                    tvArea.text = it.address.area.uppercase()
-                    tvCity.text = it.address.city.uppercase()
-                    tvDistrict.text = it.address.district.uppercase()
-                    tvDob.text = it.dob
-                    tvEmail.text = it.email
-                    tvFirstname.text = it.name.firstname.uppercase()
-                    tvFullname.text = it.name.fullname.uppercase()
-                    tvHouseNo.text = it.address.houseNo.uppercase()
-                    tvLastname.text = it.name.lastname.uppercase()
-                    tvLocality.text = it.address.locality.uppercase()
-                    tvMiddlename.text = it.name.middlename.uppercase()
-                    tvParentfirstname.text = it.parent.name.firstname.uppercase()
-                    tvParentfullname.text = it.parent.name.fullname.uppercase()
-                    tvParentlastname.text = it.parent.name.lastname.uppercase()
-                    tvParentmiddlename.text = it.parent.name.middlename.uppercase()
-                    tvPhone.text = it.contactNo
-                    tvPincode.text = it.address.pincode
-                    tvPostoffice.text = it.address.postOffice.uppercase()
-                    tvRelation.text = it.parent.relation.relation
-                    tvState.text = it.address.state.uppercase()
-                    tvStreetLine1.text = it.address.street_line_1.uppercase()
-                    tvSubDistrict.text = it.address.subDistrict.uppercase()
-                    tvUsername.text = it.username
-                }
-            }
-        }
+//        CoroutineScope(Dispatchers.IO).launch {
+//            ProfileApi.getProfile().also {
+//                if(!(it!!.equals(null))) {
+//                    withContext(Dispatchers.Main) {
+//                        tvArea.text = it.address.area.uppercase()
+//                        tvCity.text = it.address.city.uppercase()
+//                        tvDistrict.text = it.address.district.uppercase()
+//                        tvDob.text = it.dob
+//                        tvEmail.text = it.email
+//                        tvFirstname.text = it.name.firstname.uppercase()
+//                        tvFullname.text = it.name.fullname.uppercase()
+//                        tvHouseNo.text = it.address.houseNo.uppercase()
+//                        tvLastname.text = it.name.lastname.uppercase()
+//                        tvLocality.text = it.address.locality.uppercase()
+//                        tvMiddlename.text = it.name.middlename.uppercase()
+//                        tvParentfirstname.text = it.parent.name.firstname.uppercase()
+//                        tvParentfullname.text = it.parent.name.fullname.uppercase()
+//                        tvParentlastname.text = it.parent.name.lastname.uppercase()
+//                        tvParentmiddlename.text = it.parent.name.middlename.uppercase()
+//                        tvPhone.text = it.contactNo
+//                        tvPincode.text = it.address.pincode
+//                        tvPostoffice.text = it.address.postOffice.uppercase()
+//                        tvRelation.text = it.parent.relation.relation
+//                        tvState.text = it.address.state.uppercase()
+//                        tvStreetLine1.text = it.address.street_line_1.uppercase()
+//                        tvSubDistrict.text = it.address.subDistrict.uppercase()
+//                        tvUsername.text = it.username
+//                    }
+//                }
+//            }
+//        }
+
 
         CoroutineScope(Dispatchers.IO).launch {
-            ProfileApi.updateProfile("raj-rangani", "rajrangani@gmail.com", "9929435622", "2002/10/07", "m")
+            val data = ProfileApi.updateProfile("raj-rangani", "rajrangani@gmail.com", "9929435622", "2002/10/07", "m")
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@ProfileActivity, data.toString(), Toast.LENGTH_SHORT).show()
+            }
         }
 
 

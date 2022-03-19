@@ -7,4 +7,14 @@
 
     <include android:id="@+id/appBar" layout="@layout/addform_actionbar" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/frgCurrent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/appBar"
+        android:layout_marginStart="20sp"
+        android:layout_marginTop="5sp"
+        android:layout_marginEnd="20sp"
+        android:layout_marginBottom="5sp" />
+
 </RelativeLayout>

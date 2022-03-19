@@ -8,9 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.ListPopupWindow
-import com.example.database.models.Form
 import com.example.viewpagertest.database.MyDatabaseHelper
-import java.text.Normalizer
+import com.example.viewpagertest.models.Form
 
 class AddformFragment : Fragment()
 {
@@ -23,7 +22,7 @@ class AddformFragment : Fragment()
 
         selectFormPopupButton.also { listPopupWindow.anchorView = it }
 
-        val items = listOf("Aadhar Card Form", "Pan Card Form", "Voting Card Form")
+        val items = listOf("Aadhar Card Form", "Pan Card Form")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_popup_window_item, items)
         listPopupWindow.setAdapter(adapter)
 
@@ -53,11 +52,14 @@ class AddformFragment : Fragment()
         val btnAdd = fragmentView.findViewById<Button>(R.id.btnAdd)
         val author = fragmentView.findViewById<TextView>(R.id.author)
         btnAdd.setOnClickListener {
-//            val form = Form(null, author.text.toString(), selectFormPopupButton.text.toString(), 20, 0)
-//            MyDatabaseHelper(fragmentView.context).insertForm(form)
+            val form = Form(null, author.text.toString(), selectFormPopupButton.text.toString(), 0, 0)
+            val formId = MyDatabaseHelper(fragmentView.context).insertForm(form)
+
             val intent = Intent(fragmentView.context, DisplayFormActivity::class.java)
+            intent.putExtra("File", selectFormPopupButton.text.toString())
+            intent.putExtra("FormId", formId.toInt())
             startActivity(intent)
-            Toast.makeText(context, "Form Added Successfully", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Form Created Successfully", Toast.LENGTH_SHORT).show()
         }
 
         return fragmentView

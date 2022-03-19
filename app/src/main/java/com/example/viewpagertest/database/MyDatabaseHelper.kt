@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
-import com.example.database.models.FieldSpecifier
-import com.example.database.models.Form
-import com.example.database.models.FormField
+import com.example.viewpagertest.models.FieldSpecifier
+import com.example.viewpagertest.models.Form
+import com.example.viewpagertest.models.FormField
 import com.example.viewpagertest.models.*
 
 class MyDatabaseHelper(context: Context) :
@@ -32,10 +32,11 @@ class MyDatabaseHelper(context: Context) :
             db.execSQL("CREATE TABLE Address (Id INTEGER PRIMARY KEY AUTOINCREMENT,street_line_1 TEXT NOT NULL, area TEXT NOT NULL,locality TEXT NOT NULL,houseNo TEXT NOT NULL,postOffice TEXT NOT NULL,state TEXT NOT NULL,district TEXT NOT NULL,subDistrict TEXT NOT NULL,city TEXT NOT NULL,pincode TEXT NOT NULL )")
             db.execSQL("CREATE TABLE FormField (Id INTEGER PRIMARY KEY AUTOINCREMENT, field_name TEXT NOT NULL, type TEXT NOT NULL)")
             db.execSQL("CREATE TABLE Name (Id INTEGER PRIMARY KEY AUTOINCREMENT, firstname TEXT NOT NULL, lastname TEXT NOT NULL, middlename TEXT NOT NULL, fullname TEXT NOT NULL)")
-            db.execSQL("CREATE TABLE FieldSpecifier (Id INTEGER PRIMARY KEY AUTOINCREMENT, formId LONG NOT NULL, fieldId LONG NOT NULL, xaxis FLOAT NOT NULL, yaxis FLOAT NOT NULL, FOREIGN KEY(formId) REFERENCES Form(Id) ON DELETE CASCADE, FOREIGN KEY(fieldId) REFERENCES FormField(Id) ON DELETE CASCADE)")
+            db.execSQL("CREATE TABLE FieldSpecifier (Id INTEGER PRIMARY KEY AUTOINCREMENT,field_data TEXT NOT NULL,formId LONG NOT NULL, fieldId LONG NOT NULL, xaxis FLOAT NOT NULL, yaxis FLOAT NOT NULL, FOREIGN KEY(formId) REFERENCES Form(Id) ON DELETE CASCADE, FOREIGN KEY(fieldId) REFERENCES FormField(Id) ON DELETE CASCADE)")
             db.execSQL("CREATE TABLE Parent (Id INTEGER PRIMARY KEY AUTOINCREMENT, relation TEXT NOT NULL, nameId LONG NOT NULL, FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE)")
             db.execSQL("CREATE TABLE Profile (Id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT NOT NULL, password TEXT NOT NULL, email TEXT NOT NULL, contactNo TEXT NOT NULL, dob TEXT NOT NULL, gender TEXT NOT NULL, nameId LONG NOT NULL, addressId LONG NOT NULL, parentId LONG NOT NULL,FOREIGN KEY(nameId) REFERENCES Name(Id) ON DELETE CASCADE,FOREIGN KEY(addressId) REFERENCES Address(Id) ON DELETE CASCADE,FOREIGN KEY(parentId) REFERENCES Parent(Id) ON DELETE CASCADE)")
 
+            db.disableWriteAheadLogging()
         } catch (ex: SQLiteException) {
             Log.e("MyDatabaseHelper", "Database already exists.")
         }
@@ -114,7 +115,7 @@ class MyDatabaseHelper(context: Context) :
         return writableDatabase.delete("Form", "Id = ?", arrayOf(id.toString()))
     }
 
-    fun getFormFieldData(id: Int?): ArrayList<FormField> {
+    fun getFormFieldData(id: Int?, name:String = ""): ArrayList<FormField> {
         var cursor: Cursor? = null
         if (id == null) {
             cursor = readableDatabase.query(
@@ -126,14 +127,24 @@ class MyDatabaseHelper(context: Context) :
                 null,
                 null
             )
-        }
-
-        if (id != null) {
+        } else {
             cursor = readableDatabase.query(
                 "FormField",
                 arrayOf("*"),
                 "id = ?",
                 arrayOf(id.toString()),
+                null,
+                null,
+                null
+            )
+        }
+
+        if (name != "") {
+            cursor = readableDatabase.query(
+                "FormField",
+                arrayOf("*"),
+                "field_name = ?",
+                arrayOf(name.toString()),
                 null,
                 null,
                 null
@@ -161,7 +172,7 @@ class MyDatabaseHelper(context: Context) :
 
     fun insertFormField(formField: FormField): Long {
         val values = ContentValues()
-        values.put("fieldname", formField.fieldname)
+        values.put("field_name", formField.fieldname)
         values.put("type", formField.type)
 
         return writableDatabase.insert("FormField", null, values)
@@ -169,7 +180,7 @@ class MyDatabaseHelper(context: Context) :
 
     fun updateFormField(formField: FormField, id: Int): Int {
         val values = ContentValues()
-        values.put("fieldname", formField.fieldname)
+        values.put("field_name", formField.fieldname)
         values.put("type", formField.type)
 
         return writableDatabase.update("FormField", values, "Id = ?", arrayOf(id.toString()))
@@ -275,17 +286,18 @@ class MyDatabaseHelper(context: Context) :
         values.put("fieldId", fieldSpecifier.field?.id)
         values.put("xaxis", fieldSpecifier.xaxis)
         values.put("yaxis", fieldSpecifier.yaxis)
+        values.put("field_data", fieldSpecifier.fieldData)
 
         return writableDatabase.insert("FieldSpecifier", null, values)
     }
 
-    fun getFieldSpecifierData():ArrayList<FieldSpecifier>{
+    fun getFieldSpecifierData(formId: Int):ArrayList<FieldSpecifier>{
 
         val cursor = readableDatabase.query(
             "FieldSpecifier",
             arrayOf("*"),
-            null,
-            null,
+            "formId = ?",
+            arrayOf(formId.toString()),
             null,
             null,
             null
@@ -294,14 +306,15 @@ class MyDatabaseHelper(context: Context) :
         val arrayOfFieldSpecifier = arrayListOf<FieldSpecifier>()
 
         while (!cursor.isAfterLast()) {
-            val form = getFormData(cursor.getInt(1))
-            val formField = getFormFieldData(cursor.getInt(2))
+            val form = getFormData(cursor.getInt(2))
+            val formField = getFormFieldData(cursor.getInt(3))
             val fieldSpecifier = FieldSpecifier(
                 id = cursor.getInt(0),
+                fieldData = cursor.getString(1),
                 form = form[0],
                 field = formField[0],
-                xaxis = cursor.getFloat(3),
-                yaxis = cursor.getFloat(4)
+                xaxis = cursor.getFloat(4),
+                yaxis = cursor.getFloat(5),
             )
             arrayOfFieldSpecifier.add(fieldSpecifier)
             cursor.moveToNext()
@@ -317,6 +330,7 @@ class MyDatabaseHelper(context: Context) :
         values.put("fieldId", fieldSpecifier.field?.id)
         values.put("xaxis", fieldSpecifier.xaxis)
         values.put("yaxis", fieldSpecifier.yaxis)
+        values.put("field_data",fieldSpecifier.fieldData)
 
         return writableDatabase.update("FieldSpecifier", values, "Id = ?", arrayOf(id.toString()))
     }

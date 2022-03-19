@@ -4,4 +4,6 @@
     <string name="cart">Cart</string>
     <string name="profile">Profile</string>
     <string name="form">Form</string>
+    <string name="previous">previous</string>
+    <string name="next">next</string>
 </resources>

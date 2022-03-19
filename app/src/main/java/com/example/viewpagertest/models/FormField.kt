@@ -1,7 +1,7 @@
-package com.example.database.models
+package com.example.viewpagertest.models
 
 data class FormField(
     var id: Int?,
     var fieldname: String?,
-    var type: String?
-    )
+    var type: String?,
+)

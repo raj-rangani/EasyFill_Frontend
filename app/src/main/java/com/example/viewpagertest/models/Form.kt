@@ -1,4 +1,4 @@
-package com.example.database.models
+package com.example.viewpagertest.models
 
 data class Form(
     var id: Int?,

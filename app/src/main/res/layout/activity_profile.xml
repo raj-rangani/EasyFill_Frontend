@@ -45,7 +45,9 @@
                         android:id="@+id/profileImage"
                         android:layout_width="90sp"
                         android:layout_height="90sp"
-                        android:src="@color/bluePrimary"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/profile"
                         app:shapeAppearanceOverlay="@style/Theme.ViewPagerTest.roundedProfileImageView" />
 
                     <LinearLayout

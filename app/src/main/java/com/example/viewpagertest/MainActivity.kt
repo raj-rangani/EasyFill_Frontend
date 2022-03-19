@@ -2,74 +2,56 @@ package com.example.viewpagertest
 
 import android.app.UiModeManager
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
+import android.util.Log
 import android.view.MenuItem
-import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import  com.google.android.material.appbar.MaterialToolbar
 import androidx.appcompat.app.AppCompatDelegate.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentContainerView
-import com.example.database.models.FieldSpecifier
+import com.example.viewpagertest.api.ProfileApi
 import com.example.viewpagertest.database.MyDatabaseHelper
-import com.example.database.models.Form
-import com.example.database.models.FormField
+import com.example.viewpagertest.helper.Constant
 import com.example.viewpagertest.models.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.button.MaterialButton
-import java.lang.Exception
+import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.io.InputStreamReader
+import java.util.*
 
 class MainActivity : AppCompatActivity()
 {
     private lateinit var frgCurrent: FragmentContainerView
     private lateinit var navBottom: BottomNavigationView
+    private lateinit var wishMeText: TextView
+    private lateinit var profileAvatar: ImageView
+    private lateinit var username: TextView
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
-        insert_Profile()
-        insert_Profile_father()
-        insert_Profile_mother()
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //TODO: Database Code Here
-//        //database create start
-//        try{
-//        val dbHelper = MyDatabaseHelper(this)
-//            val form = Form(null,"mother","rajbha", 1, 80)
-//            val formID = dbHelper.insertForm(form)
-//            val arrayOfForm :ArrayList<Form>
-//            arrayOfForm = dbHelper.getFormData(null)
-//
-//            val formfield = FormField(null,"name","Parth","text")
-//            val formfieldID = dbHelper.insertFormField(formfield)
-//            val arrayOfFormfield :ArrayList<FormField>
-//            arrayOfFormfield = dbHelper.getFormFieldData(null)
-//
-//            val fieldSpecifier =  FieldSpecifier(null,arrayOfForm[0],arrayOfFormfield[0],10.11f,10.12f)
-//            val fieldSpecifierID = dbHelper.insertFieldSpecifier(fieldSpecifier)
-//            val arrayOffieldspecifier :ArrayList<FieldSpecifier> = dbHelper.getFieldSpecifierData()
-//
-//
-//
-//            dbHelper.deleteForm(arrayOfForm[0].id!!)
-//            Toast.makeText(this, arrayOfForm.toString(), Toast.LENGTH_SHORT).show()
-//        }
-//        catch(ex:Exception)
-//        {
-//            Toast.makeText(this, ex.toString(), Toast.LENGTH_SHORT).show()
-//        }
+        wishMeText = findViewById(R.id.wishMeText)
+        wishMeText.text = getWishes()
 
-        //TODO: Till Here
+        username = findViewById(R.id.username)
 
-//        val playlists = ()
-//        val playlistsID = MyDatabaseHelper.insertPlaylist(playlists)
-//
-//        Toast.makeText(this, playlistsID.toString(), Toast.LENGTH_SHORT).show()
-
-        //databse create end
+        profileAvatar = findViewById(R.id.profile)
 
         frgCurrent = findViewById(R.id.frgCurrent)
         setCurrentFragment(HomeFragment.INSTANCE)
@@ -128,16 +110,58 @@ class MainActivity : AppCompatActivity()
                 edit.apply()
             }
         }
-        
+
+        val authPrefs = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val auth = authPrefs.getBoolean("LOGIN", false)
+
+        if(!auth) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
+
         actionBar.setOnClickListener{
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
         }
+
+        // Load All data to profiles
+
+        val databasePref = getSharedPreferences("DATABASE", MODE_PRIVATE)
+        val field = databasePref.getString("Add", "FALSE")
+
+        if(field.equals("FALSE")) {
+            addFields()
+        }
+
+        loadToCache()
     }
 
     override fun onResume() {
         setSelectedFragment(navBottom.selectedItemId)
         super.onResume()
+
+        val prefsProfile = getSharedPreferences("PROFILES", MODE_PRIVATE)
+        val profileJson = prefsProfile.getString("Profile", "[NO DATA]")
+        if(!(profileJson.equals("[NO DATA]"))) {
+            if(!(profileJson.equals(null))) {
+                val profile = Gson().fromJson(profileJson, Profile::class.java)
+                username.text = profile.username
+
+                val image = openFileInput("Avatar.png")
+                val bitmap = BitmapFactory.decodeStream(image)
+
+                if(bitmap != null) {
+                    profileAvatar.setImageBitmap(bitmap)
+                } else {
+                    profileAvatar.setImageResource(R.drawable.default_profile)
+                }
+            } else {
+                username.text = "Anonymous"
+                profileAvatar.setImageResource(R.drawable.default_profile)
+            }
+
+        }
     }
 
     private fun setSelectedFragment(selectedItemID: Int)
@@ -173,67 +197,56 @@ class MainActivity : AppCompatActivity()
         }
     }
 
-    private fun insert_Profile(){
-        val dbHelper = MyDatabaseHelper(this)
 
-        val name = Name(null,"Rangani","Raj","J","Rangani Raj J")
-        name.id = dbHelper.insertName(name).toInt()
+    private fun getWishes(): String
+    {
+        val cal = Calendar.getInstance()
+        val hour =  cal.get(Calendar.HOUR_OF_DAY).toInt()
 
-        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
-        address.id = dbHelper.insertAddress(address).toInt()
-
-        val parentName = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
-        parentName.id = dbHelper.insertName(parentName).toInt()
-
-        val parent = Parent(null,Relation.F,parentName)
-        parent.id = dbHelper.insertParent(parent).toInt()
-
-        val profile = Profile(null,"RajRangani","0000","RajRangani@test.com","1234567890","17-10-2002","Male",name,address,parent)
-        profile.id = dbHelper.insertProfile(profile).toInt()
-
-//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
+        if (hour in 4..12) {return "GOOD MORNING,"}
+        else if (hour in 12..16) {return "GOOD AFTERNOON,"}
+        else if (hour in 16..20) {return "GOOD EVENING,"}
+        else {return "GOOD NIGHT,"}
     }
 
-    private fun insert_Profile_father(){
-        val dbHelper = MyDatabaseHelper(this)
+    private fun loadToCache() {
+        val assetsList = assets.list("")
 
-        val name = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
-        name.id = dbHelper.insertName(name).toInt()
+        assetsList?.forEach {
+            if(it.toString() == "images" || it.toString() == "webkit") {
+                return@forEach
+            }
 
-        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
-        address.id = dbHelper.insertAddress(address).toInt()
-
-        val parentName = Name(null,"Vinubhai","Rangani","R","Vinubhai R Rangani")
-        parentName.id = dbHelper.insertName(parentName).toInt()
-
-        val parent = Parent(null,Relation.F,parentName)
-        parent.id = dbHelper.insertParent(parent).toInt()
-
-        val profile = Profile(null,"JayeshbhaiRangani","0000","RajRangani0000@test.com","1234500000","01-01-2001","Male",name,address,parent)
-        profile.id = dbHelper.insertProfile(profile).toInt()
-
-//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
-    }
-    private fun insert_Profile_mother(){
-        val dbHelper = MyDatabaseHelper(this)
-
-        val name = Name(null,"Ushaben","Rangani","J","Ushaben J Rangani")
-        name.id = dbHelper.insertName(name).toInt()
-
-        val address = Address(null,"7","Jay Society","Satyam Colony","khbar nathi","Ranjit nagar","Gujarat","Jamnagar","Jamnagar","jamnagar","361006")
-        address.id = dbHelper.insertAddress(address).toInt()
-
-        val parentName = Name(null,"Jayeshbhai","Rangani","V","Jayeshbhai V Rangani")
-        parentName.id = dbHelper.insertName(parentName).toInt()
-
-        val parent = Parent(null,Relation.W,parentName)
-        parent.id = dbHelper.insertParent(parent).toInt()
-
-        val profile = Profile(null,"UshabenRangani","0000","UshaRangani0000@test.com","1234500000","01-01-2001","Female",name,address,parent)
-        profile.id = dbHelper.insertProfile(profile).toInt()
-
-//        Toast.makeText(this, dbHelper.getProfileData(profile.id).toString(), Toast.LENGTH_SHORT).show()
+            val file = File(cacheDir, it.toString())
+            if (!file.exists()) {
+                val asset: InputStream = assets.open(it.toString())
+                val output = FileOutputStream(file)
+                val buffer = ByteArray(1024)
+                var size: Int
+                while (asset.read(buffer).also { size = it } != -1) {
+                    output.write(buffer, 0, size)
+                }
+                asset.close()
+                output.close()
+            }
+        }
     }
 
+    private fun addFields() {
+        val fields = Constant.Fields.AADHAR_FIELD_NAMES
+        for (field in fields) {
+            val fieldName = field.split("@")[0]
+            val fieldType = field.split("@")[1].split(":")[0].split("+")[0]
+            val formField = FormField(null, fieldName, fieldType)
 
+            val dbHelper = MyDatabaseHelper(this)
+            dbHelper.insertFormField(formField)
+            dbHelper.close()
+        }
+
+        val prefs = getSharedPreferences("DATABASE", MODE_PRIVATE)
+        val edit = prefs.edit()
+        edit.putString("Add", "TRUE")
+        edit.apply()
+    }
 }

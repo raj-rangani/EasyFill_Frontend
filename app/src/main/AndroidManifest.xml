@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViewPagerTest">
         <activity
-            android:name=".DisplayFormActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayFormActivity"
             android:exported="false" />
         <activity
             android:name=".ProfileActivity"
@@ -29,6 +32,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="be.MyApplication"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

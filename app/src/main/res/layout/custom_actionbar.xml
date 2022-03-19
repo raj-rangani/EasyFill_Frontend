@@ -16,9 +16,12 @@
         android:layout_height="fill_parent">
 
         <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/profile"
             android:layout_width="33.0sp"
             android:layout_height="33.0sp"
-            android:src="@color/bluePrimary"
+            android:src="@drawable/profile"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/Theme.ViewPagerTest.roundedImageView" />
 
         <LinearLayout android:gravity="center_vertical"
@@ -30,6 +33,7 @@
             android:layout_marginStart="12.0sp">
 
             <TextView
+                android:id="@+id/wishMeText"
                 android:textSize="10sp"
                 android:textColor="?colorAccent"
                 android:layout_width="wrap_content"
@@ -39,6 +43,7 @@
                 android:includeFontPadding="false" />
 
             <TextView
+                android:id="@+id/username"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
