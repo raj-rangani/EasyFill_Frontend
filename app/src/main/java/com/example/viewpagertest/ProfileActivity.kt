@@ -8,6 +8,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 import android.app.Dialog
+import android.graphics.BitmapFactory
 import android.graphics.Color
 
 import android.graphics.drawable.ColorDrawable
@@ -30,7 +31,7 @@ class ProfileActivity : AppCompatActivity() {
 
         val user = findViewById<MaterialCardView>(R.id.userCard)
         val back = findViewById<Button>(R.id.back)
-        val image = findViewById<ImageView>(R.id.profileImage)
+        val profileImage = findViewById<ImageView>(R.id.profileImage)
 
         val tvUsername = findViewById<TextView>(R.id.tvUsername)
         val tvEmail = findViewById<TextView>(R.id.tvEmail)
@@ -56,37 +57,50 @@ class ProfileActivity : AppCompatActivity() {
         val tvParentlastname = findViewById<TextView>(R.id.tvParentlastname)
         val tvParentfullname = findViewById<TextView>(R.id.tvParentfullname)
 
-//        CoroutineScope(Dispatchers.IO).launch {
-//            ProfileApi.getProfile().also {
-//                if(!(it!!.equals(null))) {
-//                    withContext(Dispatchers.Main) {
-//                        tvArea.text = it.address.area.uppercase()
-//                        tvCity.text = it.address.city.uppercase()
-//                        tvDistrict.text = it.address.district.uppercase()
-//                        tvDob.text = it.dob
-//                        tvEmail.text = it.email
-//                        tvFirstname.text = it.name.firstname.uppercase()
-//                        tvFullname.text = it.name.fullname.uppercase()
-//                        tvHouseNo.text = it.address.houseNo.uppercase()
-//                        tvLastname.text = it.name.lastname.uppercase()
-//                        tvLocality.text = it.address.locality.uppercase()
-//                        tvMiddlename.text = it.name.middlename.uppercase()
-//                        tvParentfirstname.text = it.parent.name.firstname.uppercase()
-//                        tvParentfullname.text = it.parent.name.fullname.uppercase()
-//                        tvParentlastname.text = it.parent.name.lastname.uppercase()
-//                        tvParentmiddlename.text = it.parent.name.middlename.uppercase()
-//                        tvPhone.text = it.contactNo
-//                        tvPincode.text = it.address.pincode
-//                        tvPostoffice.text = it.address.postOffice.uppercase()
-//                        tvRelation.text = it.parent.relation.relation
-//                        tvState.text = it.address.state.uppercase()
-//                        tvStreetLine1.text = it.address.street_line_1.uppercase()
-//                        tvSubDistrict.text = it.address.subDistrict.uppercase()
-//                        tvUsername.text = it.username
-//                    }
-//                }
-//            }
-//        }
+        val prefsProfile = getSharedPreferences("PROFILES", MODE_PRIVATE)
+        val profileJson = prefsProfile.getString("Profile", "[NO DATA]")
+        if(!(profileJson.equals("[NO DATA]"))) {
+            if(!(profileJson.equals(null))) {
+                val profile = Gson().fromJson(profileJson, Profile::class.java)
+                val image = openFileInput("Avatar.png")
+                val bitmap = BitmapFactory.decodeStream(image)
+
+                if(bitmap != null) {
+                    profileImage.setImageBitmap(bitmap)
+                } else {
+                    profileImage.setImageResource(R.drawable.default_profile)
+                }
+
+                tvArea.text = profile.address.area.uppercase()
+                tvCity.text = profile.address.city.uppercase()
+                tvDistrict.text = profile.address.district.uppercase()
+                tvDob.text = profile.dob
+                tvEmail.text = profile.email
+                tvFirstname.text = profile.name.firstname.uppercase()
+                tvFullname.text = profile.name.fullname.uppercase()
+                tvHouseNo.text = profile.address.houseNo.uppercase()
+                tvLastname.text = profile.name.lastname.uppercase()
+                tvLocality.text = profile.address.locality.uppercase()
+                tvMiddlename.text = profile.name.middlename.uppercase()
+                tvParentfirstname.text = profile.parent.name.firstname.uppercase()
+                tvParentfullname.text = profile.parent.name.fullname.uppercase()
+                tvParentlastname.text = profile.parent.name.lastname.uppercase()
+                tvParentmiddlename.text = profile.parent.name.middlename.uppercase()
+                tvPhone.text = profile.contactNo
+                tvPincode.text = profile.address.pincode.uppercase()
+                tvPostoffice.text = profile.address.postOffice.uppercase()
+                tvRelation.text = profile.parent.relation.relation
+                tvState.text = profile.address.state.uppercase()
+                tvStreetLine1.text = profile.address.street_line_1.uppercase()
+                tvSubDistrict.text = profile.address.subDistrict.uppercase()
+                tvUsername.text = profile.username
+
+            } else {
+                tvUsername.text = "Anonymous"
+                profileImage.setImageResource(R.drawable.default_profile)
+            }
+
+        }
 
 
         CoroutineScope(Dispatchers.IO).launch {
@@ -94,11 +108,6 @@ class ProfileActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 Toast.makeText(this@ProfileActivity, data.toString(), Toast.LENGTH_SHORT).show()
             }
-        }
-
-
-        image.setOnClickListener{
-            Toast.makeText(this, "hello", Toast.LENGTH_SHORT).show()
         }
 
         back.setOnClickListener {

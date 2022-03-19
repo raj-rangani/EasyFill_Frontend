@@ -29,9 +29,9 @@ class ProfileApi {
             val reader = connection.inputStream.bufferedReader()
             val responseJson = JSONObject(reader.readText())
 
-            val name:Name = Name(null,"", "", "", "")
-            val address:Address = Address(null,"", "", "", "", "", "", "", "", "", "")
-            val parent:Parent = Parent(null, Relation.N, Name(null,"","","",""))
+            val name:Name = Name(null,"[No Data]", "[No Data]", "[No Data]", "[No Data]")
+            val address:Address = Address(null,"[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]", "[No Data]")
+            val parent:Parent = Parent(null, Relation.N, Name(null,"[No Data]","[No Data]","[No Data]","[No Data]"))
 
             try {
                 val nameJson = responseJson.getJSONObject("name")
@@ -93,7 +93,7 @@ class ProfileApi {
                     username = responseJson.getString("username"),
                     email = responseJson.getString("email"),
                     contactNo = responseJson.getString("contact_no"),
-                    dob = responseJson.getString("dob"),
+                    dob = if(responseJson.getString("dob").equals(null)) responseJson.getString("dob") else "[NO DATA]",
                     gender = responseJson.getString("gender"),
                     password = null,
                     name = name,
