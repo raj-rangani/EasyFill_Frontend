@@ -11,21 +11,42 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.example.viewpagertest.adapter.HomeCardAdapter
 import com.example.viewpagertest.database.MyDatabaseHelper
+import com.google.android.material.progressindicator.CircularProgressIndicator
 
 class HomeFragment : Fragment()
 {
+    private lateinit var fragmentView: View
+    private lateinit var notFound: ConstraintLayout
+    private lateinit var main: LinearLayout
+    private lateinit var recyclerview: RecyclerView
+    private lateinit var authorname: TextView
+    private lateinit var formname: TextView
+    private lateinit var percent: TextView
+    private lateinit var progress: CircularProgressIndicator
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
     {
-        val fragmentView = inflater.inflate(R.layout.fragment_home, container, false)
-        val notFound = fragmentView.findViewById<ConstraintLayout>(R.id.notFound)
-        val main = fragmentView.findViewById<LinearLayout>(R.id.mainLayout)
-        val recyclerview = fragmentView.findViewById<RecyclerView>(R.id.homeRecycleview)
-        val authorname = fragmentView.findViewById<TextView>(R.id.Authorname)
-        val formname = fragmentView.findViewById<TextView>(R.id.Formname)
-        val percent = fragmentView.findViewById<TextView>(R.id.fillPercent)
+        fragmentView = inflater.inflate(R.layout.fragment_home, container, false)
+        notFound = fragmentView.findViewById<ConstraintLayout>(R.id.notFound)
+        main = fragmentView.findViewById<LinearLayout>(R.id.mainLayout)
+        recyclerview = fragmentView.findViewById<RecyclerView>(R.id.homeRecycleview)
+        authorname = fragmentView.findViewById<TextView>(R.id.Authorname)
+        formname = fragmentView.findViewById<TextView>(R.id.Formname)
+        percent = fragmentView.findViewById<TextView>(R.id.fillPercent)
+        progress = fragmentView.findViewById(R.id.progress)
 
+        return fragmentView
+    }
+
+    override fun onDetach() {
+        fragmentView.invalidate()
+        super.onDetach()
+    }
+
+    override fun onResume() {
         val data = MyDatabaseHelper(fragmentView.context).getFormData(null)
         if(data.size > 0) {
             val prefs = activity?.getSharedPreferences("FORM", Context.MODE_PRIVATE)
@@ -36,6 +57,7 @@ class HomeFragment : Fragment()
                 authorname.text = data.authorname?.uppercase()
                 formname.text = data.formname?.uppercase()
                 percent.text = data.fillpercent.toString() + " Percent"
+                progress.progress = data.fillpercent!!
             }
 
             notFound.visibility = View.GONE
@@ -48,7 +70,7 @@ class HomeFragment : Fragment()
             main.visibility = View.GONE
         }
 
-        return fragmentView
+        super.onResume()
     }
 
     companion object
