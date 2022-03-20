@@ -1,5 +1,6 @@
 package com.example.viewpagertest
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.widget.ListPopupWindow
 import com.example.viewpagertest.database.MyDatabaseHelper
 import com.example.viewpagertest.models.Form
+import kotlin.random.Random
 
 class AddformFragment : Fragment()
 {
@@ -22,7 +24,7 @@ class AddformFragment : Fragment()
 
         selectFormPopupButton.also { listPopupWindow.anchorView = it }
 
-        val items = listOf("Aadhar Card Form", "Pan Card Form")
+        val items = listOf("Aadhar Card Form")
         val adapter = ArrayAdapter(requireContext(), R.layout.list_popup_window_item, items)
         listPopupWindow.setAdapter(adapter)
 
@@ -52,8 +54,13 @@ class AddformFragment : Fragment()
         val btnAdd = fragmentView.findViewById<Button>(R.id.btnAdd)
         val author = fragmentView.findViewById<TextView>(R.id.author)
         btnAdd.setOnClickListener {
-            val form = Form(null, author.text.toString(), selectFormPopupButton.text.toString(), 0, 0)
+            val form = Form(null, author.text.toString(), selectFormPopupButton.text.toString(), Random.nextInt(10)+50, Random.nextInt(10)+50)
             val formId = MyDatabaseHelper(fragmentView.context).insertForm(form)
+
+            val prefs = activity?.getSharedPreferences("FORM", MODE_PRIVATE)
+            val prefEditor = prefs?.edit()
+            prefEditor?.putString("Form", formId.toInt().toString())
+            prefEditor?.apply()
 
             val intent = Intent(fragmentView.context, DisplayFormActivity::class.java)
             intent.putExtra("File", selectFormPopupButton.text.toString())

@@ -18,13 +18,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/menuPdf"
-        android:enabled="true"
-        android:icon="@drawable/ic_file_pdf"
-        android:title="@string/form"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/menuProfileGroup"
         android:enabled="true"
         android:icon="@drawable/ic_group"

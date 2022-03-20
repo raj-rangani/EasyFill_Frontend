@@ -11,15 +11,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.graphics.createBitmap
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.viewpagertest.database.MyDatabaseHelper
 import com.example.viewpagertest.models.FieldSpecifier
+import org.json.JSONObject
 import java.io.IOException
 
 class ActionPdfOpenFragment: Fragment() {
@@ -164,13 +162,16 @@ class ActionPdfOpenFragment: Fragment() {
 
     @SuppressLint("ResourceAsColor")
     private fun loadFields() {
+        val dataPrefs = activity?.getSharedPreferences("DATA", Context.MODE_PRIVATE)
+        val dataJson = dataPrefs?.getString("data", "[No Data]")
+        val data = JSONObject(dataJson!!)
 
         val fields = MyDatabaseHelper(fragment.context).getFieldSpecifierData(formId)
         for (field in fields) {
             when(field.field?.type) {
                 "TEXTBOX" -> {
                     val textView = TextView(fragment.context)
-                    textView.text = field.field?.fieldname
+                    textView.text = data.getString(field.field?.fieldname!!)
                     textView.x = field.xaxis!!
                     textView.y = field.yaxis!!
                     textView.setTextColor(R.color.black)
@@ -181,10 +182,34 @@ class ActionPdfOpenFragment: Fragment() {
 
                 }
                 "RADIOBUTTON" -> {
+                    when(field.field?.fieldname!!) {
+                        "PARENT" -> {
+                            val textView = TextView(fragment.context)
+                            textView.text = "\u25CF"
+                            textView.x = field.xaxis!!
+                            textView.y = field.yaxis!!
+                            textView.setTextColor(R.color.black)
+                            textView.textSize = 6.0f
 
+//                            when(data.getString(field.field?.fieldname!!)) {
+//                                "F" -> {}
+//                                "M" -> {}
+//                                "G" -> {}
+//                                "H" -> {}
+//                                "W" -> {}
+//                            }
+
+                            fragment.findViewById<FrameLayout>(R.id.tvGenerator).addView(textView)
+                        }
+                    }
                 }
             }
         }
+    }
+
+    override fun onDetach() {
+        fragment.findViewById<FrameLayout>(R.id.tvGenerator).removeAllViewsInLayout()
+        super.onDetach()
     }
 }
 

@@ -1,5 +1,6 @@
 package com.example.viewpagertest.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
@@ -61,6 +62,11 @@ class HomeCardAdapter(private val mList: ArrayList<Form>) : RecyclerView.Adapter
                 val intent = Intent(itemView.context, DisplayFormActivity::class.java)
                 intent.putExtra("File", formName.text.toString())
                 intent.putExtra("FormId", itemView.tag.toString().toInt())
+
+                val prefs = itemView.context?.getSharedPreferences("FORM", Context.MODE_PRIVATE)
+                val prefEditor = prefs?.edit()
+                prefEditor?.putString("Form", itemView.tag.toString())
+                prefEditor?.apply()
 
                 itemView.context.startActivity(intent)
             }

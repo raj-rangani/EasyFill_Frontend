@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,7 +10,38 @@
     android:padding="2sp"
     tools:ignore="hardcodedText">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notFound"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="250sp"
+            android:layout_height="160sp"
+            android:src="@drawable/ic_not_found"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.455" />
+
+        <TextView
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No PDF Found"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.086" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
+        android:id="@+id/mainLayout"
+        android:visibility="gone"
         android:layout_marginTop="5sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -64,6 +96,7 @@
                             android:layout_height="match_parent">
 
                             <TextView
+                                android:id="@+id/Authorname"
                                 android:includeFontPadding="false"
                                 android:textSize="14sp"
                                 android:text="Rangani Raj JayeshBhai"
@@ -71,6 +104,7 @@
                                 android:layout_height="wrap_content"/>
 
                             <TextView
+                                android:id="@+id/Formname"
                                 android:includeFontPadding="false"
                                 android:textSize="10sp"
                                 android:text="AADHAR CARD FORM"
@@ -127,6 +161,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/fillPercent"
                         android:textSize="14sp"
                         android:includeFontPadding="false"
                         android:text="50 Percent"
