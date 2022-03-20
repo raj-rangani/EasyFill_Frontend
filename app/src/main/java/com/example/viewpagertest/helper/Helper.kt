@@ -1,5 +1,15 @@
 package com.example.viewpagertest.helper
 
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
+import com.example.viewpagertest.R
+
 class Helper {
     companion object {
         fun convertToHashMap(list:String?) : ArrayList<HashMap<String, String>> {
@@ -19,6 +29,18 @@ class Helper {
                 temp.add(hash)
             }
             return temp
+        }
+
+        internal fun showProgress(context: Context, progressText: String) : Dialog {
+            val dialog = Dialog(context)
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialog.setContentView(R.layout.progress_bar)
+            dialog.findViewById<TextView>(R.id.progressText).text = progressText
+            dialog.show()
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.window?.setGravity(Gravity.CENTER)
+            return dialog
         }
     }
 }

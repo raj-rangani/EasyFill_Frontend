@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_marginTop="5sp"
+        android:layout_marginStart="2sp"
+        android:text="Enter POI (Proof of Identity)"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
+
+    <EditText
+        android:id="@+id/etPOI"
+        android:textSize="15sp"
+        android:layout_marginTop="4sp"
+        android:padding="12sp"
+        style="@style/Theme.ViewPagerTest.TextBox"
+        android:background="@drawable/corner_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5sp"
+        android:layout_marginStart="2sp"
+        android:text="Enter POA (Proof of Address)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etPOA"
+        android:textSize="15sp"
+        android:layout_marginTop="4sp"
+        android:padding="12sp"
+        style="@style/Theme.ViewPagerTest.TextBox"
+        android:background="@drawable/corner_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5sp"
+        android:layout_marginStart="2sp"
+        android:text="Enter DOB (Proof of Birth)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etDOB"
+        android:textSize="15sp"
+        android:layout_marginTop="4sp"
+        android:padding="12sp"
+        style="@style/Theme.ViewPagerTest.TextBox"
+        android:background="@drawable/corner_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_marginTop="5sp"
+        android:layout_marginStart="2sp"
+        android:text="Enter POR (Proof of Residence)"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <EditText
+        android:id="@+id/etPOR"
+        android:textSize="15sp"
+        android:layout_marginTop="4sp"
+        android:padding="12sp"
+        style="@style/Theme.ViewPagerTest.TextBox"
+        android:background="@drawable/corner_background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

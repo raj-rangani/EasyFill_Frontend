@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/close"
             android:focusable="true"
             android:clickable="true"
             android:insetLeft="0dp"
@@ -42,11 +43,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textAlignment="center"
-            android:text="UPDATE USER PROFILE"
-            android:textSize="20sp"
+            android:text="UPDATE USER NAMES"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/nameUpdate"
             android:focusable="true"
             android:clickable="true"
             android:insetLeft="0dp"
@@ -82,6 +84,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etFirstname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -98,6 +101,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etLastname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -114,6 +118,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etMiddlename"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -130,6 +135,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etFullname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"

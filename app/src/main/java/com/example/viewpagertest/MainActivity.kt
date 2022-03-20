@@ -111,15 +111,6 @@ class MainActivity : AppCompatActivity()
             }
         }
 
-        val authPrefs = getSharedPreferences("AUTH", MODE_PRIVATE)
-        val auth = authPrefs.getBoolean("LOGIN", false)
-
-        if(!auth) {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-            startActivity(intent)
-        }
-
         actionBar.setOnClickListener{
             val intent = Intent(this, ProfileActivity::class.java)
             startActivity(intent)
@@ -140,6 +131,15 @@ class MainActivity : AppCompatActivity()
     override fun onResume() {
         setSelectedFragment(navBottom.selectedItemId)
         super.onResume()
+
+        val authPrefs = getSharedPreferences("AUTH", MODE_PRIVATE)
+        val auth = authPrefs.getBoolean("LOGIN", false)
+
+        if(!auth) {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+            startActivity(intent)
+        }
 
         val prefsProfile = getSharedPreferences("PROFILES", MODE_PRIVATE)
         val profileJson = prefsProfile.getString("Profile", "[NO DATA]")

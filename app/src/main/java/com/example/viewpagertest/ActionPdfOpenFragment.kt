@@ -164,6 +164,7 @@ class ActionPdfOpenFragment: Fragment() {
 
     @SuppressLint("ResourceAsColor")
     private fun loadFields() {
+
         val fields = MyDatabaseHelper(fragment.context).getFieldSpecifierData(formId)
         for (field in fields) {
             when(field.field?.type) {
@@ -174,7 +175,6 @@ class ActionPdfOpenFragment: Fragment() {
                     textView.y = field.yaxis!!
                     textView.setTextColor(R.color.black)
                     textView.textSize = 6.0f
-                    textView.setTypeface(null, Typeface.BOLD)
                     fragment.findViewById<FrameLayout>(R.id.tvGenerator).addView(textView)
                 }
                 "CHECKBOX" -> {

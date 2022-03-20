@@ -17,6 +17,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/close"
             android:focusable="true"
             android:clickable="true"
             android:insetLeft="0dp"
@@ -43,10 +44,11 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="UPDATE PARENT DETAILS"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/parentUpdate"
             android:focusable="true"
             android:clickable="true"
             android:insetLeft="0dp"
@@ -81,15 +83,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <EditText
-            android:textSize="15sp"
-            android:layout_marginTop="4sp"
-            android:padding="12sp"
+        <com.google.android.material.button.MaterialButton
+            android:elevation="0dp"
             style="@style/Theme.ViewPagerTest.TextBox"
-            android:background="@drawable/corner_background"
+            android:textColor="?colorOnBackground"
+            app:cornerRadius="15sp"
+            android:id="@+id/selectRelation"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+            android:layout_height="55sp"
+            android:text="Select Relation"/>
 
         <TextView
             android:layout_marginStart="2sp"
@@ -98,6 +100,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etParentFirstname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -114,6 +117,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etParentLastname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -130,6 +134,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etParentMiddlename"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"
@@ -146,6 +151,7 @@
             android:layout_height="wrap_content"/>
 
         <EditText
+            android:id="@+id/etParentFullname"
             android:textSize="15sp"
             android:layout_marginTop="4sp"
             android:padding="12sp"

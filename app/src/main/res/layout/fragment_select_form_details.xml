@@ -1,11 +1,604 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView android:scrollbars="none"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DisplayFormActivity"
+    android:padding="2sp"
+    tools:ignore="hardcodedText"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:text="@string/app_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginStart="2sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                android:layout_marginBottom="6sp"
+                android:text="General Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorPrimaryVariant" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10sp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginStart="5sp"
+                android:text="Enter Full Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etFullname"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginStart="5sp"
+                android:text="Enter Email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginStart="5sp"
+                android:text="Enter Contact no"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etContact"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="5sp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Enter DOB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etdob"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="10sp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Enter Age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etAge"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5sp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_marginStart="2sp"
+                    android:text="Select Gender"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <RadioGroup
+                    android:id="@+id/rbGender"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/male"
+                        android:buttonTint="?colorAccent"
+                        android:layout_marginStart="5sp"
+                        android:text="Male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/female"
+                        android:buttonTint="?colorAccent"
+                        android:checked="true"
+                        android:layout_marginStart="5sp"
+                        android:text="Female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RadioGroup>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginStart="2sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="6sp"
+                android:text="Residential Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorPrimaryVariant" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginTop="10sp"
+                android:layout_marginStart="2sp"
+                android:text="Enter Street Line 1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etStreet"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="5sp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etArea"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="10sp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Locality"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etLocality"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginStart="2sp"
+                android:layout_marginTop="5sp"
+                android:text="Enter City"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etCity"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+            <LinearLayout
+                android:layout_marginTop="5sp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="House No"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etHouse"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="10sp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Post Office"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etPostoffice"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginStart="2sp"
+                android:layout_marginTop="5sp"
+                android:text="Enter State"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etState"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_marginTop="5sp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="District"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etDistrict"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginStart="10sp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_marginStart="2sp"
+                        android:text="Sub District"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                    <EditText
+                        android:id="@+id/etSubdistrict"
+                        android:textSize="15sp"
+                        android:layout_marginTop="4sp"
+                        android:padding="12sp"
+                        style="@style/Theme.ViewPagerTest.TextBox"
+                        android:background="@drawable/corner_background"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_marginTop="5sp"
+                android:layout_marginStart="2sp"
+                android:text="Enter Pincode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/etPincode"
+                android:textSize="15sp"
+                android:layout_marginTop="4sp"
+                android:padding="12sp"
+                style="@style/Theme.ViewPagerTest.TextBox"
+                android:background="@drawable/corner_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginStart="2sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="6sp"
+                android:text="Parent Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorPrimaryVariant" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_marginStart="2sp"
+            android:text="Select Relation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_marginTop="10sp"
+            android:elevation="0dp"
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:textColor="?colorOnBackground"
+            app:cornerRadius="15sp"
+            android:id="@+id/selectRelation"
+            android:layout_width="match_parent"
+            android:layout_height="55sp"
+            android:text="Select Relation"/>
+
+        <TextView
+            android:layout_marginTop="4sp"
+            android:layout_marginStart="2sp"
+            android:text="Enter Fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/etParentFullname"
+            android:textSize="15sp"
+            android:layout_marginTop="4sp"
+            android:padding="12sp"
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:background="@drawable/corner_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="5sp"
+            android:layout_marginStart="2sp"
+            android:text="Enter Aadhar Card No."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/etAdharcardno"
+            android:textSize="15sp"
+            android:layout_marginTop="4sp"
+            android:padding="12sp"
+            style="@style/Theme.ViewPagerTest.TextBox"
+            android:background="@drawable/corner_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="2sp"
+            android:layout_marginStart="2sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textColor="?colorOnBackground"
+                android:textSize="18sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="6sp"
+                android:text="Verificaion Information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?colorPrimaryVariant" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="5sp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginStart="2sp"
+                android:text="Select Verification type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RadioGroup
+                android:id="@+id/verification"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/document"
+                    android:buttonTint="?colorAccent"
+                    android:text="Document"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/introducer"
+                    android:buttonTint="?colorAccent"
+                    android:layout_marginStart="5sp"
+                    android:text="Introducer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/hof"
+                    android:buttonTint="?colorAccent"
+                    android:layout_marginStart="5sp"
+                    android:text="HOF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </RadioGroup>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/verificationDetail"
+                android:visibility="gone"
+                android:layout_marginBottom="10sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

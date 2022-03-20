@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.viewpagertest.api.ProfileApi
+import com.example.viewpagertest.helper.Helper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -25,6 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         val etConfirmPassword = findViewById<EditText>(R.id.etConfirmPassword)
 
         findViewById<Button>(R.id.register).setOnClickListener {
+            val progress = Helper.showProgress(this,"Creating Account")
             val textPassword = etPassword.text.toString()
             val textConfirmPassword = etConfirmPassword.text.toString()
             if(textPassword == textConfirmPassword) {
@@ -32,15 +34,18 @@ class RegisterActivity : AppCompatActivity() {
                     val response = ProfileApi.createProfile(etUsername.text.toString(),etMail.text.toString().replace(" ", ""), etPhone.text.toString(), etPassword.text.toString())
                     withContext(Dispatchers.Main) {
                         if(response[0].toString().toBoolean()) {
+                            progress.hide()
                             Toast.makeText(this@RegisterActivity, response[1].toString(), Toast.LENGTH_SHORT).show()
                             finish()
                         } else {
                             Toast.makeText(this@RegisterActivity, response[1].toString(), Toast.LENGTH_SHORT).show()
                         }
+                        progress.hide()
                     }
                 }
             } else {
                 Toast.makeText(this, "Password And Confirm Password Not Match", Toast.LENGTH_SHORT).show()
+                progress.hide()
             }
         }
 

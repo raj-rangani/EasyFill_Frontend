@@ -19,6 +19,7 @@ import java.io.FileOutputStream
 import android.graphics.Bitmap
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.example.viewpagertest.database.MyDatabaseHelper
@@ -33,10 +34,12 @@ class DisplayFormActivity : AppCompatActivity() {
     private lateinit var parcelFileDescriptor: ParcelFileDescriptor
     private lateinit var currentPage: PdfRenderer.Page
     private lateinit var imageViewPdf: ImageView
+    private lateinit var displayText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_form)
+        displayText = findViewById(R.id.displayText)
 
         val form = intent.getStringExtra("File")
         val formId = intent.getIntExtra("FormId", -1)
@@ -88,6 +91,7 @@ class DisplayFormActivity : AppCompatActivity() {
                 replace(R.id.frgCurrent, ActionPdfOpenFragment.newInstance(uri, formId))
                 commit()
             }
+            displayText.text = "Preview Details"
             it.isEnabled = false
             back.isEnabled = true
         }
@@ -97,6 +101,7 @@ class DisplayFormActivity : AppCompatActivity() {
                 replace(R.id.frgCurrent, SelectFormDetailsFragment.INSTANCE)
                 commit()
             }
+            displayText.text = "Add Details"
             it.isEnabled = false
             forward.isEnabled = true
         }

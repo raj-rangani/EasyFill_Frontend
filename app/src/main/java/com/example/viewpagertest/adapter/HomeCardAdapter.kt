@@ -1,5 +1,6 @@
 package com.example.viewpagertest.adapter
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.viewpagertest.DisplayFormActivity
 import com.example.viewpagertest.models.Form
 import com.example.viewpagertest.R
 import com.google.android.material.progressindicator.CircularProgressIndicator
@@ -24,6 +26,7 @@ class HomeCardAdapter(private val mList: ArrayList<Form>) : RecyclerView.Adapter
         holder.formName.text = ItemsViewModel.formname
         holder.formAuthor.text = ItemsViewModel.authorname
         holder.fillPercent.text = ItemsViewModel.fillpercent.toString()
+        holder.itemView.tag = ItemsViewModel.id.toString()
 
         if(ItemsViewModel.fillpercent!!.toInt() >= 90) {
             holder.background.backgroundTintList =
@@ -37,7 +40,6 @@ class HomeCardAdapter(private val mList: ArrayList<Form>) : RecyclerView.Adapter
             holder.background.backgroundTintList =
                 ColorStateList.valueOf(holder.itemView.context.resources.getColor(R.color.error))
         }
-
     }
 
     // return the number of the items in the list
@@ -52,5 +54,16 @@ class HomeCardAdapter(private val mList: ArrayList<Form>) : RecyclerView.Adapter
         val formAuthor: TextView = itemView.findViewById(R.id.formAuthor)
         val background: CardView = itemView.findViewById(R.id.fillPercentBackground)
         val fillPercent: TextView = itemView.findViewById(R.id.fillPercent)
+
+        init {
+            itemView.setOnClickListener {
+
+                val intent = Intent(itemView.context, DisplayFormActivity::class.java)
+                intent.putExtra("File", formName.text.toString())
+                intent.putExtra("FormId", itemView.tag.toString().toInt())
+
+                itemView.context.startActivity(intent)
+            }
+        }
     }
 }

@@ -36,6 +36,11 @@
         <item name="backgroundTint">#BABABA</item>
     </style>
 
+    <style name="Theme.ViewPagerTest.card" parent="Widget.Material3.CardView.Filled">
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
     <style name="Theme.ViewPagerTest.appBar" parent="@style/ThemeOverlay.Material3.Toolbar.Surface">
         <item name="android:backgroundTint">@color/bottomNavLight</item>
         <item name="backgroundTint">@color/bottomNavLight</item>
@@ -68,6 +73,10 @@
 
     <style name="Theme.ViewPagerTest.TextBox" parent="">
         <item name="android:backgroundTint">#EAEAEA</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.DarkTextBox" parent="">
+        <item name="android:background">#818181</item>
     </style>
 
     <style name="Theme.ViewPagerTest.OkButton" parent="Widget.MaterialComponents.Button.OutlinedButton">

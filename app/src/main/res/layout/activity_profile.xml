@@ -186,6 +186,9 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/nameCard"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -308,6 +311,9 @@
 
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/addressCard"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -556,6 +562,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/parentCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20sp"
@@ -697,6 +704,9 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
+                android:id="@+id/delete"
+                android:clickable="true"
+                android:focusable="true"
                 android:layout_marginBottom="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

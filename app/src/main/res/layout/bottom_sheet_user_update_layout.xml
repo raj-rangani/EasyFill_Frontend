@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:textAlignment="center"
             android:text="UPDATE USER PROFILE"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <com.google.android.material.button.MaterialButton
@@ -135,6 +135,7 @@
             android:layout_height="wrap_content"/>
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/dobSelect"
             android:layout_marginTop="4sp"
             app:cardElevation="0dp"
             android:layout_width="match_parent"

@@ -84,6 +84,19 @@
         <item name="android:backgroundTint">#4A4A4A</item>
     </style>
 
+    <style name="Theme.ViewPagerTest.ShadedTextBox" parent="">
+        <item name="android:backgroundTint">#6A6A6A</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.DarkTextBox" parent="">
+        <item name="android:background">#505050</item>
+    </style>
+
+    <style name="Theme.ViewPagerTest.card" parent="Widget.Material3.CardView.Filled">
+        <item name="android:backgroundTint">#101010</item>
+        <item name="backgroundTint">@color/black</item>
+    </style>
+
     <style name="Theme.ViewPagerTest.OkButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="android:backgroundTint">@android:color/transparent</item>
     </style>

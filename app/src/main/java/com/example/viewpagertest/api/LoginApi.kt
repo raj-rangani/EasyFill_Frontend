@@ -46,5 +46,19 @@ class LoginApi {
 
             return arrayOf(false)
         }
+
+        internal fun logout(token: String) : Boolean{
+            val url = URL("$API_URL/user/logout")
+
+            val connection = (url.openConnection() as HttpURLConnection).apply {
+                requestMethod = "POST"
+                setRequestProperty("Authorization", "Bearer $token")
+                doOutput = true
+                doInput = true
+                setRequestProperty("Content-Type", "application/json")
+            }
+
+            return connection.responseCode == HttpURLConnection.HTTP_OK
+        }
     }
 }
